@@ -1,0 +1,94 @@
+Idea:
+    1 coach / can be more but doesn't really matter here ++
+    at least 3 programs, but obviously can have as many as the coach wants ++
+    maybe one time workouts / but those should not be percentage based and more condition focused (just create 1) ++
+
+    athletes can start the programs (max 2 at the time) ++
+    they can view the thing before starting ++
+    optional daily workout reminder
+    skip option on workout days ++
+    Automatic load calculator on main lifts, otherwise rpe when needed (if user doesn't provide, percantage is displayed) ++
+    Loads are customisable on evey exercise, maybe have a last time subtext with how may reps and sets you did with that exercise, so you don't have to go back if you want to customize it. ++
+
+    optional notes on each day ++
+    complete button for a workout ++ 
+    if you completed or skipped all of the days, you finished the program ++
+    being able to cancel programs ++
+    program does not go forward automatically (without skip or completed, you stay on the same day) ++
+    maybe program results? (best lifts) 
+    profile, regular user only sees theirs
+    lifting stats, bodyweight tracker 
+    
+    create programs templates for coach ++
+    create workout(one time) templates for coach ++
+    create exercise templates for coach ++
+    custom workout(one time) builder (athletes| this should be a very easy process) ++
+    custom program builder (athletes)
+    create custom exercise(athletes | not public) ++
+    built in timer, for rest
+    chat with your coach
+    rating the coaches programs and workouts , or just being able to provide feedback
+    
+
+DB:
+    users
+    programs (id, name, descripiton, created_by, duration, type , is_custom , status(public, private, being worked on?))
+    wokrouts  (id, name, descripiton, created_by, type)
+    exercises (id, name, descripiton, created_by, type)
+
+    user_programs (user_id, program_id, started_at, finished_at, status(cancelled, ongoing, finished))
+    
+    user_lifts / maxes (user_id, exercise_id, calculated_maxes?)
+
+
+
+Coach side
+    One coach account is enough initially
+    Create exercise templates
+    Create program templates
+    Create one-time workout templates
+    Publish or unpublish programs
+    View athletes running their programs
+
+Athlete side
+    Browse and preview programs
+    Start a program
+    Maximum two active programs
+    View current workout
+    Automatically calculate loads
+    Override calculated loads
+    Record completed sets, reps, load and RPE
+    Add workout notes
+    Complete a workout
+    Skip a workout
+    Cancel a program
+    View previous completed workouts/ this is probably stupid
+
+
+
+
+
+
+
+    users
+    programs
+    excersises
+    promgram_excersise_percentage_
+
+
+
+
+
+
+
+1. users and programs relationship
+2. authentaciton
+3. basic routing, index, profile, admin side for creating programs
+
+user table:
+    id
+    name
+    email
+    verified at
+    password
+    role
