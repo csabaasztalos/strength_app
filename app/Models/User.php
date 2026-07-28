@@ -24,12 +24,17 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
+
+    protected $attributes = [
+        'role' => UserRoles::ATHLETE
+    ];
+
     protected function casts(): array
     {
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
-            'roles' => UserRoles::class
+            'role' => UserRoles::class
         ];
     }
 

@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Program;
 use App\Models\User;
+use App\ProgramCategory;
 use App\ProgramStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -23,6 +24,9 @@ class ProgramFactory extends Factory
             'user_id' => User::factory(),
             'name' =>fake()->sentence(),
             'description' => fake()->paragraph(),
+            'weeks' => fake()->numberBetween(0,17),
+            'days_per_week' => fake()->numberBetween(0,8),
+            'category' => ProgramCategory::STRENGTH
         ];
     }
 }

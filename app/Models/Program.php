@@ -5,10 +5,13 @@ namespace App\Models;
 use App\ProgramCategory;
 use App\ProgramStatus;
 use ArrayObject;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+
+#[Fillable(['name', 'description', 'weeks', 'weeks', 'days_per_week', 'category', 'status', 'image_path'])]
 
 class Program extends Model
 {
@@ -17,20 +20,20 @@ class Program extends Model
 
     protected function casts () : array {
         return [
-            'status' => ProgramStatus::class
+            'status' => ProgramStatus::class,
+            'category' => ProgramCategory::class
         ];
     }
 
     protected $attributes = [
-        'status' => ProgramStatus::DRAFT,
-        'category' => ProgramCategory::OLYMPIC
+        'status' => ProgramStatus::DRAFT
     ];
 
     public function user(): BelongsTo {
         return $this->belongsTo(User::class);
     }
 
-    /*public function exercises(): HasMany {
-        return $this->HasMany(Exercise::class);
-    }*/
+    public function programDays(): HasMany {
+        return $this->HasMany(ProgramDay::class);
+    }
 }

@@ -1,1 +1,7 @@
-//
+console.log('app.js loaded');
+import './removeSessionMessage.js';
+import './selectProgramCategory.js';
+import './toggleWeeks.js';
+import './toggleDays.js';
+import './addAndRemoveExercise.js';
+import './imageBtns.js';

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\ExerciseCategory;
 use App\Models\Exercise;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -18,7 +19,9 @@ class ExerciseFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' =>fake()->sentence(),
+            'description' => fake()->paragraph(),
+            'category' => ExerciseCategory::OLYMPIC
         ];
     }
 }

@@ -19,6 +19,9 @@ return new class extends Migration
             $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->unsignedTinyInteger('weeks');
+            $table->unsignedTinyInteger('days_per_week');
+            $table->string('image_path')->nullable();
             $table->enum('category', ProgramCategory::cases());
             $table->enum('status', ProgramStatus::cases())->default(ProgramStatus::DRAFT);
             $table->timestamps();

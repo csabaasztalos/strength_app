@@ -21,4 +21,8 @@ enum ProgramCategory: string
             self::REHAB => 'Rehab'
         };
     }
+
+    public function values(): array {
+        return array_map(fn ($category) => $category->value, self::cases());
+    }
 }
