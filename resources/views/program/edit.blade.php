@@ -1,4 +1,5 @@
 <x-layout>
+    @vite('resources/js/searchExercises.js')
     <x-form title="Edit {{ $program->name }} program"
         description="Don't rush, think it through."
         action="{{ route('program.update', [$program]) }}"
@@ -7,7 +8,7 @@
         method="PATCH">
 
         <x-program.program-details :program="$program">
-            <div>
+            <div id="programEditor">
                 @foreach ($programDays as $weekNumber => $days)
                     <x-card class="programWeek space-y-2 mt-2">
                         <h3 class="weeks text-2xl font-bold" >Week {{ $weekNumber }}
@@ -34,7 +35,7 @@
                                             :programExercise="$programExercise"
                                         />
                                     @empty
-                                        <p class="text-muted-foreground">No exercises yet.</p>
+                                        <p class="text-muted-foreground mb-2">No exercises yet.</p>
                                     @endforelse
                                     
                                     <div class="flex gap-2 mt-4">

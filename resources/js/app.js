@@ -5,3 +5,6 @@ import './toggleWeeks.js';
 import './toggleDays.js';
 import './addAndRemoveExercise.js';
 import './imageBtns.js';
+import './toggleModal.js';
+import './searchExercises.js';
+import './fillEditModalData.js';

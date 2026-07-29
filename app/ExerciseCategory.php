@@ -12,17 +12,19 @@ enum ExerciseCategory: string
     case CONDITIONING = 'conditioning';
     case ENDURANCE = 'endurance';
     case REHAB = 'rehab';
+    case OTHER = 'other';
 
     public function label(): string {
         return match($this) {
-            self::OLYMPIC => 'Olympic weightlifting exercise',
-            self::POWERLIFTING => 'Powerlifting exercise',
-            self::STRENGTH => 'Strength exercise',
+            self::OLYMPIC => 'Olympic weightlifting',
+            self::POWERLIFTING => 'Powerlifting',
+            self::STRENGTH => 'Strength',
             self::ACCESSORY => 'Accessory lift',
-            self::BODYBUILDING => 'Bodybuilding exercise',
-            self::CONDITIONING => 'Conditioning exercise',
-            self::ENDURANCE => 'Endurance exercise',
-            self::REHAB => 'Rehab exercise'
+            self::BODYBUILDING => 'Bodybuilding',
+            self::CONDITIONING => 'Conditioning',
+            self::ENDURANCE => 'Endurance',
+            self::REHAB => 'Rehab',
+            self::OTHER => 'Other'
         };
     }
 }

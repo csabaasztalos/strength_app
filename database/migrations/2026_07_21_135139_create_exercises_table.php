@@ -14,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('exercises', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description');
+            $table->string('name')->unique();
+            $table->string('description')->nullable();
             $table->enum('category', ExerciseCategory::cases());
             $table->timestamps();
         });

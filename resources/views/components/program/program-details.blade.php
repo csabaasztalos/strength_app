@@ -67,11 +67,11 @@
         <div class="w-full flex items-center" id="imgBtnContainer">
             <button type="button" class="btn bg-red-500 mx-auto mt-4 hover:!bg-red-800" id="deleteImage">Delete</button>
             <input type="hidden" id="current_image" name="program[current_image]" value="{{ $program->image_path }}">
-            
         </div>
     </div>
 @else
         <x-form.field class="image" label="Image" name="program[image_path]" type="file" accept="image/*"></x-form.field>
+        <input type="hidden" id="current_image" name="program[current_image]" value="">
 @endif
 
 {{ $slot }}

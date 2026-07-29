@@ -108,16 +108,8 @@ programs table
 
 
 
-
-
-MOST:::
-1. delete button on exercises
-2. if no exercise -> No exercises add yet.
-3. select or ajax search for exercise names
-4.Add a few exercises
-5. 1 image/program optional.
-
-delete image
 do 1 week then apply it to every week!
 amrap??
 darg and drop for positions
+
+errormessages

@@ -1,8 +1,9 @@
 @props([
-    'title', 'description', 'action', 'size' => 'max-w-md', 'file' => null, 'method' => null
+    'title', 'description' => null, 'action', 'size' => 'max-w-md', 'file' => null, 'method' => null,
+    'height' => 'min-h-[calc(100dvh-4rem)]'
 ])
 
-<div class="flex items-center justify-center w-full min-h-[calc(100dvh-4rem)] px-4">
+<div class="flex items-center justify-center w-full {{ $height }}px-4">
     <div class="w-full {{ $size }}">
         <div class="text-center">
             <h1 class="text-4xl font-bold tracking-tight mt-10">{{ $title }}</h1>

@@ -53,7 +53,8 @@ class UpdateProgramRequest extends FormRequest
             'program.category' => ['required', Rule::enum(ProgramCategory::class)],
             'program.weeks' => ['required', 'integer', 'min:1', 'max:30'],
             'program.days_per_week' => ['required', 'integer', 'min:1', 'max:7'],
-            'program.image_path' => ['nullable', 'image', 'max:4000']
+            'program.image_path' => ['nullable', 'image', 'max:4000'],
+            'program.current_image' => ['nullable', 'string']
         ];
     }
 }

@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\ExerciseCategory;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreExerciseRequest extends FormRequest
 {
@@ -12,7 +14,7 @@ class StoreExerciseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +25,10 @@ class StoreExerciseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'exercise' => ['required', 'array'],
+            'exercise.name' => ['required', 'string', 'min:3', 'max:255', Rule::unique('exercises', 'name')],
+            'exercise.description' => ['nullable', 'string'],
+            'exercise.category' => ['required', 'string', Rule::enum(ExerciseCategory::class)]
         ];
     }
 }

@@ -7,12 +7,13 @@ use App\Http\Requests\UpdateProgramRequest;
 use App\Models\Program;
 use App\Models\ProgramDay;
 use App\Models\ProgramDayExercise;
+use App\ProgramStatus;
 use DB;
 use Illuminate\Support\Facades\Storage;
 
 final class UpdateProgram {
     public function handle(Program $program, UpdateProgramRequest $request): void {
-      DB::transaction(function() use ($request, $program) {
+        DB::transaction(function() use ($request, $program) {
             $oldWeeks = (int) $program->weeks;
             $oldDays = (int) $program->days_per_week;
 
@@ -21,7 +22,7 @@ final class UpdateProgram {
             $program->update($request['program']);
 
             if ($request['program']['current_image'] === null && $request->hasFile('program.image_path')) {
-                 $this->updateProgramImage($request, $program);
+                $this->updateProgramImage($request, $program);
             }
 
             if((int) $program->weeks !== $oldWeeks  ||
@@ -39,7 +40,6 @@ final class UpdateProgram {
             }
         });
     }
-
 
     private function updateProgramDays(Program $program, int $weeks, int $days) {
         for($w = 1; $w <= $weeks; $w++) {

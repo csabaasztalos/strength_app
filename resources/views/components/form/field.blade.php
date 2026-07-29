@@ -14,7 +14,7 @@
         @if ($class) class={{ "{$class}" }}
         @else class={{ "input" }}
         @endif
-        id="{{ $id ?? $name ?? ''}}"
+        id="{{ $id ?? $name}}"
         type="{{ $type }}"
         name="{{ $name ?? ''}}"
         @if ($type !== 'file')

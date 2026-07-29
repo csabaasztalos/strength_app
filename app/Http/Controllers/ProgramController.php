@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdateStatusRequest;
 use App\Models\Program;
 use App\Http\Requests\StoreProgramRequest;
 use App\Http\Requests\UpdateProgramRequest;
 use App\ProgramCategory;
+use App\ProgramStatus;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -146,8 +148,39 @@ class ProgramController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Program $program)
+    public function destroy(Program $program, Request $request)
     {
-        //
+        //only delete if nobody is running the program
+        if ($program->id === (int) $request['delete_program']) {
+            $program->delete();
+        }
+
+        return redirect(route('index'))->with('success', "Program has been successfully deleted.");
+    }
+
+    /**
+     * Publish specified resource.
+     */
+    public function publish(Program $program, UpdateStatusRequest $request)
+    {
+        if ($program->id === (int) $request['publish_program_id']) {
+            $program->update(['status' => ProgramStatus::ACTIVE]);
+        }
+        
+        return redirect(route('programs'))->with('success', "Program has been successfully published.");
+    }
+
+    /**
+     * Draft specified program.
+     */
+    public function draft(Program $program, Request $request)
+    {
+        if ($program->id === (int) $request['draft_program_id']) {
+            $program->update([
+                'status' => ProgramStatus::DRAFT
+            ]);
+        }
+
+        return redirect(route('programs', $program))->with('success', "Program has been successfully drafted.");
     }
 }
