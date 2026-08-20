@@ -1,10 +1,10 @@
 <x-layout>
-@vite('resources/js/toggleModal.js')
+@vite('resources/js/toggleExcerciseModal.js')
 @vite('resources/js/fillEditModalData.js')
 @vite('resources/js/selectExerciseEditCategory.js')
 
-    <div class="w-7xl mx-auto">
-        <div class="font-bold text-2xl mt-6 mb-2"><h1>Current exercises library</h1></div>
+    <div class="w-full max-w-7xl mt-10 mb-6 mx-auto md:mt-6">
+        <h1 class="font-bold text-2xl mt-6 mb-6">Current exercises library</h1>
         <div class="flex justify-between">
             <details class="relative group inline-block">
                 <summary class="list-none cursor-pointer rounded-xl bg-[oklch(0.25_0.03_268)] text-white px-4 py-3 select-none flex items-center justify-between">
@@ -39,13 +39,13 @@
             </div>
         </div>
 
-        <ul class="grid grid-cols-3 mt-10 gap-2">
+        <ul class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 mt-6">
         @forelse ($exercises as $exercise)
             <x-card class="relative">
                 <li class="flex justify-between">
                     <div class="flex flex-col gap-2">
                         <div><b>{{ $exercise->name }}</b></div>
-                        <div class="ml-2 overflow-hidden mb-8 text-muted-foreground line-clamp-5">{{ $exercise->description }}</div>
+                        <div class="ml-2 overflow-hidden mb-8 text-muted-foreground line-clamp-5 min-h-25">{{ $exercise->description }}</div>
                         <div class="flex gap-2 absolute bottom-2 left-2">
                             <a class="btn btn-outlined bg-yellow-500/40 openEditModal"
                                 data-id="{{ $exercise->id }}"
@@ -69,8 +69,8 @@
                     <div><btn class="btn btn-outlined cursor-default bg-gray-200 line-clamp-1 text-center">{{ $exercise->category->label() }}</btn></div>
                         <div class="flex flex-col items-start ml-2">
                             <p class="text-muted-foreground">id: {{ $exercise->id }}</p>
-                            <p class="text-muted-foreground">created at: {{ date_format($exercise->created_at, 'Y.h.d' ) }}</p>
-                            <p class="text-muted-foreground">updated at: {{ date_format($exercise->updated_at, 'Y.h.d' ) }}</p>
+                            <p class="text-muted-foreground">created: {{ date_format($exercise->created_at, 'Y.h.d' ) }}</p>
+                            <p class="text-muted-foreground">updated: {{ date_format($exercise->updated_at, 'Y.h.d' ) }}</p>
                         </div>
                     </div>
                 </li>

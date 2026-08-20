@@ -6,7 +6,6 @@
         size="max-w-5xl"
         file="multipart/form-data"
         method="PATCH">
-
         <x-program.program-details :program="$program">
             <div id="programEditor">
                 @foreach ($programDays as $weekNumber => $days)

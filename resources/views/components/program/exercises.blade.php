@@ -1,6 +1,8 @@
-@props(['programDays'])
+@props([
+    'programDays'
+])
 
-<div class="mb-10">
+<div>
     @foreach ($programDays as $weekNumber => $days)
         <x-card class="programWeek space-y-2 mt-2">
             <h3 class="weeks text-2xl font-bold" >Week {{ $weekNumber }}
@@ -8,15 +10,21 @@
             </h3>
             <div class="days_per_week hidden mt-2">
                 @foreach ($days as $day)
-                    <div class="day ml-2 text-xl font-bold flex flex-row gap-2 mb-4">Day {{ $day->day_number}}
-                        @if ($day->name)
-                            <div><b>{{ $day->name }}</b></div>
-                        @endif
-
-                        <button class="toggle-day-btn" type="button">
-                            <x-icons.arrow-down/>
-                        </button>
+                    <div class="day ml-2 text-xl font-bold flex flex-col">
+                        <div class="flex flex-row">
+                            Day {{ $day->day_number}}
+                            @if ($day->name)
+                                <div>
+                                    <b>&nbsp;{{ $day->name }}</b>
+                                </div>
+                            @endif
+    
+                            <button class="toggle-day-btn mx-1 mr-2" type="button">
+                                <x-icons.arrow-down/>
+                            </button>
+                        </div>
                     </div>
+                   
                     <div class="exercises ml-4 hidden text-lg mb-4">
                         @forelse ($day->programDayExercises as $programExercise)
                             <div>

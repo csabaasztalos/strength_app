@@ -9,15 +9,17 @@
     value="{{ $program ? $program->name : ''}}"
     dataTest="programName"
     ></x-form.field >
-<x-form.field 
-    label="Description (optional)"
-    name="program[description]"
-    value="{{ $program ? $program->description : ''}}"
-    dataTest="programDescription">
-    </x-form.field >
 
+    <label class="label mt-2 mb-2" for="program[description]">Description</label>
+    <textarea
+        class="input min-h-30"
+        name="program[description]"
+        id="program[description]"
+        value="{{ $program ? $program->description : ''}}"
+        dataTest="programDescription">{{ $program ? $program->description : ''}}
+    </textarea>
 <h4 for="program_categories" class="label mb-2">Category</h4>
-<div class="flex flex-row gap-2" id="program_categories">
+<div class="grid grid-cols-3 gap-2" id="program_categories">
     @foreach (App\ProgramCategory::cases() as $category)
         <button
             type="button"

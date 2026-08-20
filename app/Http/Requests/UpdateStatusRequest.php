@@ -25,9 +25,7 @@ class UpdateStatusRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'publish_program_id' => ['required', 'integer', Rule::exists('programs', 'id')]
-        ];
+        return [];
     }
 
     public function after(): array {
@@ -57,9 +55,8 @@ class UpdateStatusRequest extends FormRequest
                         'status',
                         'Program image is required before publishing.'
                     );
-                }
-
-                if ( !Storage::disk('public')->exists($program->image_path) ) {
+                    
+                } elseif( !Storage::disk('public')->exists($program->image_path) ) {
 
                     $validator->errors()->add(
                         'status',

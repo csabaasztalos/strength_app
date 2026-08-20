@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Exercise;
 use App\Http\Requests\StoreExerciseRequest;
 use App\Http\Requests\UpdateExerciseRequest;
-use App\Models\ProgramDayExercise;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 
 class ExerciseController extends Controller
 {
@@ -31,6 +29,7 @@ class ExerciseController extends Controller
             ]);
     }
 
+
     /**
      * Show the form for creating a new resource.
      */
@@ -38,6 +37,7 @@ class ExerciseController extends Controller
     {
         return view('exercise.create');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -47,6 +47,7 @@ class ExerciseController extends Controller
         Exercise::create($request['exercise']);
         return redirect(route('exercises'))->with('success', 'Successfully created a new exercise!');
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -61,6 +62,7 @@ class ExerciseController extends Controller
         $exercise->update($exerciseData);
         return redirect(route('exercises'))->with('success', 'Exercise successfully updated!');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -78,6 +80,7 @@ class ExerciseController extends Controller
 
         return redirect(route('exercises'));
     }
+
 
     public function search(Request $request)
     {

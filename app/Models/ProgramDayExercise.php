@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['program_id', 'exercise_id', 'sets', 'reps', 'percentage', 'name', 'duration_minutes', 'position'])]
+#[Fillable(['program_id', 'exercise_id', 'sets', 'reps', 'percentage', 'rpe', 'name', 'duration_minutes', 'position'])]
 
 class ProgramDayExercise extends Model
 {

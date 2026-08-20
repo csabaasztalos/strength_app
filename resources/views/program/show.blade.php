@@ -1,49 +1,84 @@
 <x-layout>
 @vite('resources/js/toggleWeeks.js')
 @vite('resources/js/toggleDays.js')
-    <div class="mx-auto w-5xl px-4 mt-10">
-        <div class="flex items-center justify-between">
+    <div class="w-full w-max-7xl mt-10 mb-6 mx-auto md:mt-6">
+        <h1 class="text-3xl font-bold ">{{ $program->name }}</h1>
+        <div>
+            @error('status')
+                <div class="text-sm text-red-500 bg-red-200 border-none rounded-md py-2 px-2 w-1/2">
+                    {{ $message }}
+                </div>
+            @enderror
+        </div>
+       <div class="flex items-center justify-between">
             <div class="mt-4 mb-4">
-                <h1 class="text-3xl font-bold ">{{ $program->name }}</h1>
-                <a class= "btn border cursor-default
-                    {{ $program->status == App\ProgramStatus::DRAFT ? "bg-yellow-500/10 text-yellow-500 border-yellow-500/20" : "bg-green-500/10 text-green-500 border-green-500/20" }}">
-                    {{ $program->status }}
-                </a>
+                @if ($program->status === App\ProgramStatus::DRAFT)
+                    <a class= "btn border cursor-default
+                        {{"bg-gray-500/10 text-gray-500 border-gray-500/20"}}">
+                @elseif ($program->status === App\ProgramStatus::HIDDEN)
+                    <a class= "btn border cursor-default
+                        {{"border bg-yellow-500/10 text-yellow-500 border-yellow-500/20" }}">
+                @else
+                    <a class= "btn border cursor-default
+                        {{"border bg-green-500/10 text-green-500 border-green-500/20" }}">
+                @endif
+                        {{ $program->status->label() }}
+                    </a>
             </div>
             <div class="flex items-end gap-2">
-                <a href="{{ route('program.edit', $program) }}" class="btn btn-outlined bg-yellow-500/40">
-                    Edit <x-icons.external/>
-                </a>
-                @if ($program->status === App\ProgramStatus::DRAFT)
-                    <form method="POST" action="{{ route('program.publish', $program) }}">
+                @if ($program->status === App\ProgramStatus::ACTIVE)
+                    <form method="POST" action="{{ route('user_program.start', $program) }}">
                         @csrf
-                        @method('PATCH')
-                        <button type="submit" class="btn btn-outlined bg-green-500/40">
-                                Publish<x-icons.check/>
+                        <button type="submit" class="btn btn-outlined bg-black text-white">
+                            Start Program
                         </button>
-                        <input type="hidden" value="{{ $program->id }}" name="publish_program_id">
-                    </form>
-                @else
-                    <form method="POST" action="{{ route('program.draft', $program) }}">
-                        @csrf
-                        @method('PATCH')
-                        <button type="submit" class="btn btn-outlined bg-gray-500/40">
-                            Draft<x-icons.draft/>
-                        </button>
-                        <input type="hidden" value="{{ $program->id }}" name="draft_program_id">
                     </form>
                 @endif
-                
-                <form method="POST" action="{{ route('program.delete', $program) }}">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="btn btn-outlined bg-red-500/40">
-                        Delete <x-icons.trash/>
-                    </button>
-                    <input type="hidden" value="{{ $program->id }}" name="delete_program">
-                </form>
+                @if ($user->role === App\UserRoles::COACH)
+                    @if($program->status == App\ProgramStatus::DRAFT)
+                        <a href="{{ route('program.edit', $program) }}" class="btn btn-outlined bg-yellow-500/40">
+                            Edit <x-icons.external/>
+                        </a>
+                    @endif
+                    @if ($program->status === App\ProgramStatus::DRAFT)
+                        <form method="POST" action="{{ route('program.publish', $program) }}">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit" class="btn btn-outlined bg-green-500/40">
+                                    Publish<x-icons.check/>
+                            </button>
+                            <input type="hidden" value="{{ $program->id }}" name="publish_program_id">
+                        </form>
+                    @elseif ($program->status === App\ProgramStatus::ACTIVE)
+                        <form method="POST" action="{{ route('program.hide', $program) }}">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit" class="btn btn-outlined bg-gray-500/40">
+                                Hide<x-icons.hide/>
+                            </button>
+                        </form>
+                    @else
+                        <form method="POST" action="{{ route('program.draft', $program) }}">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit" class="btn btn-outlined bg-gray-500/40">
+                                Draft<x-icons.draft/>
+                            </button>
+                        </form>
+                    @endif
+    
+                    @if($program->status == App\ProgramStatus::DRAFT)
+                        <form method="POST" action="{{ route('program.delete', $program) }}">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-outlined bg-red-500/40">
+                            Delete <x-icons.trash/>
+                        </button>
+                    </form>
+                    @endif
+                @endif
             </div>
-        </div>
+       </div>
 
         @if ($program?->image_path)
             <x-card class="mb-2">
@@ -51,13 +86,15 @@
                     data-test="program-image" id="imageDisplay">
             </x-card>
         @endif
-
+    
         @if ($program->description)
             <x-card>
                 <h1 class="text-lg font-bold">Program description</h1>
                 <p class="text-muted-foreground">{{ $program->description }}</p>
             </x-card>
         @endif
+   
         <x-program.exercises :programDays="$programDays"></x-program.exercises>
+    </div>
 
 </x-layout>

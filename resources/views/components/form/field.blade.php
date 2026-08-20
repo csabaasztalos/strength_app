@@ -1,8 +1,8 @@
 @props([
     'label' => null, 'name' => null, 'value' => null,
     'type' => 'text', 'required' => null, 'min' => null,
-    'max' => null, 'class' => "input", 'id' => null, 'accept' => null,
-    'placeholder' => null, 'dataTest'=>null
+    'max' => null, 'class' => null, 'id' => null, 'accept' => null,
+    'placeholder' => null, 'dataTest'=>null, 'step' => null
 ])
 
 <div class="space-y-2">
@@ -10,8 +10,9 @@
         <label class="label mt-2" for="{{ $name ?? '' }}">{{ $label }}</label>
     @endif
     <input
-        placeholder="{{ $placeholder ?? ''}}"
-        @if ($class) class={{ "{$class}" }}
+        @if ($placeholder)  placeholder="{{ $placeholder}}"@endif
+        @if ($step)  step="{{ $step }}"@endif
+        @if ($class) class={{ "$class" }}
         @else class={{ "input" }}
         @endif
         id="{{ $id ?? $name}}"

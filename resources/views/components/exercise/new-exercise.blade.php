@@ -24,7 +24,7 @@
         
                     <div>
                         <div class="label mt-2">Category</div>
-                        <div class="grid grid-cols-4 mt-2">
+                        <div class="grid grid-cols-3 md:grid-cols-4 mt-2">
                             @foreach (App\ExerciseCategory::cases() as $category)
                             <button
                                 type="button"

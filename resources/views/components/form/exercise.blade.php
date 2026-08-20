@@ -3,21 +3,13 @@
 ])
 
 <div class="exercise mb-2">
-    <table style="width:80%;">
-        <tr style="text-align: left;" class="mb-2 text-sm">
-            <td>Name</td>
-            <td>Sets</td>
-            <td>Reps</td>
-            <td>Percentage</td>
-            <td>RPE</td>
-            <td>Duration (m)</td>
-            <td>Position</td>
-        </tr>
-        <tr class="mb-2">
-            <td>
+    <div>
+        <div class="mb-2 grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 mr-6">
+            <div class="ml-2 xl:ml-0">
                 <div class="relative">
                     <b>
                         <x-form.field
+                            label="Name"
                             class="input exerciseSearch"
                             value="{{ $programExercise->exercise->name }}"
                             required="required"
@@ -36,9 +28,11 @@
                         </ul>
                     </div>
                 </div>
-            </td>
-            <td>
+            </div>
+
+            <div class="space-y-2 ml-2">
                 <x-form.field
+                    label="Sets"
                     class="input"
                     name="weeks[{{ $weekNumber }}][days][{{ $dayId }}][exercises][{{ $programExercise->id }}][sets]"
                     value="{{ $programExercise->sets }}"
@@ -47,9 +41,10 @@
                     min="1"
                     max="30"
                 />
-            </td>
-            <td>
+            </div>
+            <div class="space-y-2 ml-2">
                 <x-form.field
+                    label="Reps"
                     class="input"
                     name="weeks[{{ $weekNumber }}][days][{{ $dayId }}][exercises][{{ $programExercise->id }}][reps]"
                     value="{{ $programExercise->reps }}"
@@ -58,9 +53,10 @@
                     min="1"
                     max="50"
                 />
-            </td>
-            <td>
+            </div>
+            <div class="space-y-2 ml-2">
                 <x-form.field
+                    label="Percentage"
                     class="input"
                     name="weeks[{{ $weekNumber }}][days][{{ $dayId }}][exercises][{{ $programExercise->id }}][percentage]"
                     value="{{ $programExercise->percentage }}"
@@ -68,29 +64,34 @@
                     min="1"
                     max="100"
                 />
-            </td>
-            <td>
+            </div>
+            <div class="space-y-2 ml-2">
                 <x-form.field
+                    label="RPE"
                     class="input"
                     name="weeks[{{ $weekNumber }}][days][{{ $dayId }}][exercises][{{ $programExercise->id }}][rpe]"
                     value="{{ $programExercise->rpe }}"
                     type="number"
                     min="1"
                     max="10"
+                    step="0.5"
                 />
-            </td>
-            <td>
+            </div>
+            <div class="space-y-2 ml-2">
                 <x-form.field
+                    label="Duration"
                     class="input"
                     name="weeks[{{ $weekNumber }}][days][{{ $dayId }}][exercises][{{ $programExercise->id }}][duration_minutes]"
                     value="{{ $programExercise->duration_minutes }}"
                     type="number"
                     min="0"
                     max="120"
+                    step="0.5"
                 />
-            </td>
-            <td>
+            </div>
+            <div class="space-y-2 ml-2">
                 <x-form.field
+                    label="Position"
                     class="input positions"
                     name="weeks[{{ $weekNumber }}][days][{{ $dayId }}][exercises][{{ $programExercise->id }}][position]"
                     value="{{ $programExercise->position }}"
@@ -99,14 +100,14 @@
                     min="1"
                     max="100"
                 />
-            </td>
-            <td>
+            </div>
+            <div class="flex items-center mt-8">
                 @if (!$show)
                     <button class="btn bg-red-500 text-white ml-2 text-sm delete-exercise" type="button">X</button>
                 @endif
-            </td>
-        </tr>
-    </table>
+            </div>
+        </div>
+    </div>
 
     <x-form.field
         class=""
@@ -122,5 +123,10 @@
         required="required"
         type="hidden"
     />
-
 </div>
+
+
+
+
+
+ 

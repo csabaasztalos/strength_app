@@ -15,21 +15,13 @@ addExerciseBtns.forEach(btn => {
         newRow.classList.add('exercise-row', 'exercise', 'mb-2');
         
         newRow.innerHTML = `
-            <table style="width:80%;">
-                <tr style="text-align: left;" class="mb-2 text-sm">
-                    <td>Name</td>
-                    <td class="px-2">Sets</td>
-                    <td class="px-2">Reps</td>
-                    <td class="px-2">Percentage</td>
-                    <td class="px-2">RPE</td>
-                    <td class="px-2">Duration (m)</td>
-                    <td class="px-2">Position</td>
-                </tr>
-                <tr class="mb-2">
-                    <td>
+            <div>
+                <div class="mb-2 grid grid-cols-2 md:grid-cols-4 xl:grid-cols-8 mr-6">
+                    <div>
                         <div class="relative">
                             <b>
-                                <div class="space-y-2">
+                                <div class="space-y-2 ml-2">
+                                    <p class="label ">Name</p>
                                     <input class="input exerciseSearch" autocomplete="off" required type="text" placeholder="Exercise name">
                                 </div>
                             </b>
@@ -39,44 +31,50 @@ addExerciseBtns.forEach(btn => {
                             </div>
                             <input class="exerciseId" name="weeks[${weekNumber}][days][${dayId}][new_exercises][${newExerciseCounter}][exercise_id]" required type="hidden">
                         </div>
-                    </td>
-                    <td>
+                    </div>
+                    <div>
                         <div class="space-y-2 ml-2">
+                            <p class="label ">Sets</p>
                             <input class="input" name="weeks[${weekNumber}][days][${dayId}][new_exercises][${newExerciseCounter}][sets]" required type="number" min="1" max="30">
                         </div>
-                    </td>
-                    <td>
+                    </div>
+                    <div>
                         <div class="space-y-2 ml-2">
+                            <p class="label ">Reps</p>
                             <input class="input" name="weeks[${weekNumber}][days][${dayId}][new_exercises][${newExerciseCounter}][reps]" required type="number" min="1" max="50">
                         </div>
-                    </td>
-                    <td>
+                    </div>
+                    <div>
                         <div class="space-y-2 ml-2">
+                            <p class="label ">Percentage</p>
                             <input class="input" name="weeks[${weekNumber}][days][${dayId}][new_exercises][${newExerciseCounter}][percentage]" type="number" min="1" max="100">
                         </div>
-                    </td>
-                    <td>
+                    </div>
+                    <div>
                         <div class="space-y-2 ml-2">
+                            <p class="label ">RPE</p>
                             <input class="input" name="weeks[${weekNumber}][days][${dayId}][new_exercises][${newExerciseCounter}][rpe]" type="number" min="1" max="10">
                         </div>
-                    </td>
-                    <td>
+                    </div>
+                    <div>
                         <div class="space-y-2 ml-2">
-                            <input class="input" name="weeks[${weekNumber}][days][${dayId}][new_exercises][${newExerciseCounter}][duration_minutes]" type="number" min="0.5" max="120">
+                            <p class="label ">Duration</p>
+                            <input class="input" name="weeks[${weekNumber}][days][${dayId}][new_exercises][${newExerciseCounter}][duration_minutes]" type="number" min="0.5" max="120" step="0.5">
                         </div>
-                    </td>
-                    <td>
+                    </div>
+                    <div>
                         <div class="space-y-2 ml-2">
+                            <p class="label ">Position</p>
                             <input class="input positions" name="weeks[${weekNumber}][days][${dayId}][new_exercises][${newExerciseCounter}][position]" type="number" min="0" max="100" required
                                 value=""
                             >
                         </div>
-                    </td>
-                    <td>
+                    </div>
+                    <div class="flex items-center mt-8">
                         <button class="btn bg-red-500 text-white text-sm cancel-exercise ml-2" type="button">X</button>
-                    </td>
-                </tr>
-            </table>
+                    </div>
+                </div>
+            </div>
         `;
 
         container.insertBefore(newRow, buttonWrapper);

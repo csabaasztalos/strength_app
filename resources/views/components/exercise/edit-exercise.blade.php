@@ -28,7 +28,7 @@
                         class="input min-h-40"
                         id="exerciseDescription"
                         name="edit_exercise[description]"
-                        placholder="Exemple description"
+                        placholder="Example description"
                         value="">
 
                         </textarea>

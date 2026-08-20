@@ -2,17 +2,20 @@
 
 namespace App\Http\Requests;
 
+use App\ExerciseCategory;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UpdateProgramDayExerciseRequest extends FormRequest
+class ResetPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,7 +26,9 @@ class UpdateProgramDayExerciseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'token' => 'required',
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'password' => ['required', 'string', 'min:8', 'max:255', 'confirmed']
         ];
     }
 }

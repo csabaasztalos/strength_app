@@ -41,6 +41,7 @@ final class UpdateProgram {
         });
     }
 
+
     private function updateProgramDays(Program $program, int $weeks, int $days) {
         for($w = 1; $w <= $weeks; $w++) {
             for($d = 1; $d <= $days; $d++) {
@@ -53,8 +54,8 @@ final class UpdateProgram {
 
         $program->programDays()->where('week_number', '>', $weeks)->delete();
         $program->programDays()->where('day_number', '>', $days)->delete();
-        
     }
+
 
     private function updateProgramImage(UpdateProgramRequest $request, Program $program): void {
         if (Storage::disk('public')->exists($program->image_path)) {
@@ -68,6 +69,7 @@ final class UpdateProgram {
         $program->update($image);
     }
 
+
     private function updateProgramDayNames(Program $program, array $days): void {
          foreach ($days as $programId => $dayData) {
             $day = $program->programDays()
@@ -77,6 +79,7 @@ final class UpdateProgram {
             ]);
         }
     }
+
 
     private function updateProgramDayExcercises(Program $program, array $weeks): void  {
         foreach ($weeks as $weekNumber => $weekData) {
@@ -102,6 +105,7 @@ final class UpdateProgram {
             }
         }
     }
+
 
     private function deleteProgramDayExercises(array $deletedExercises): void  {
         $deleteIds = explode(',', $deletedExercises[0]);

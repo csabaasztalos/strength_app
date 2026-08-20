@@ -36,7 +36,7 @@ DB:
     wokrouts  (id, name, descripiton, created_by, type)
     exercises (id, name, descripiton, created_by, type)
 
-    user_programs (user_id, program_id, started_at, finished_at, status(cancelled, ongoing, finished))
+    user_programs (user_id, program_id, started_at, finished_at, status(cancelled, started, finished))
     
     user_lifts / maxes (user_id, exercise_id, calculated_maxes?)
 

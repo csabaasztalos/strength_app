@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-#[Fillable(['name', 'description', 'weeks', 'weeks', 'days_per_week', 'category', 'status', 'image_path'])]
+#[Fillable(['name', 'description', 'weeks', 'days_per_week', 'category', 'status', 'image_path'])]
 
 class Program extends Model
 {
@@ -35,5 +35,9 @@ class Program extends Model
 
     public function programDays(): HasMany {
         return $this->HasMany(ProgramDay::class);
+    }
+
+    public function userProgram(): hasMany {
+        return $this->HasMany(UserProgram::class);
     }
 }
