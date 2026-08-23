@@ -38,6 +38,6 @@ final class StoreProgram {
 
             $program->programDays()->createMany($days);
             return $program;
-        });
+        });  
     }
 }

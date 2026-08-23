@@ -1,7 +1,7 @@
 
 const openBtns = document.querySelectorAll('.openEditModal');
-
-openBtns.forEach( btn => {
+if (openBtns) {
+    openBtns.forEach( btn => {
     btn.addEventListener('click', function(event) {
         const exerciseId = btn.dataset.id;
         const exerciseName = btn.dataset.name;
@@ -52,3 +52,4 @@ openBtns.forEach( btn => {
     });
    
 });
+}

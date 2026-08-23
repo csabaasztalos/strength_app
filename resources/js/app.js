@@ -1,4 +1,5 @@
 console.log('app.js loaded');
+
 import './removeSessionMessage.js';
 import './selectProgramCategory.js';
 import './toggleWeeks.js';

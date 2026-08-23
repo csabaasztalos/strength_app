@@ -20,6 +20,7 @@
                         required="required"
                         placholder="Example name"
                         value=""
+                        dataTest="editName"
                     />
         
                     <div class="space-y-2">
@@ -29,6 +30,7 @@
                         id="exerciseDescription"
                         name="edit_exercise[description]"
                         placholder="Example description"
+                        data-test="editDescription"
                         value="">
 
                         </textarea>
@@ -40,7 +42,7 @@
                             @foreach (App\ExerciseCategory::cases() as $category)
                             <button
                                 type="button"
-                                data-test="category-{{ $category->value }}"
+                                data-test="category-edit-{{ $category->value }}"
                                 class="editCategory btn btn-outlined flex-1 h-10 bg-gray-400 text-white hover:!bg-gray-600"
                                 value="{{ $category->value }}">
                                 {{ $category->label() }}
@@ -55,7 +57,7 @@
                         />
                     </div>
 
-                    <div><button type="submit" class="btn btn-primray mt-2 mb-2">Save</button></div>
+                    <div><button data-test="saveExercise" type="submit" class="btn btn-primray mt-2 mb-2">Save</button></div>
                 </div>
             </x-form>
         </x-card>

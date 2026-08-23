@@ -5,6 +5,7 @@ namespace App\Helpers;
 use App\Models\UserProgram;
 use App\Models\UserProgramDay;
 use App\UserProgramDayStatus;
+use App\UserProgramStatus;
 use DB;
 
 class UserProgramDayHelper {
@@ -43,6 +44,10 @@ class UserProgramDayHelper {
     public function statusUpdate (UserProgram $userProgram, UserProgramDay $userProgramDay, UserProgramDayStatus $status) {
         DB::transaction(function() use ($userProgram, $userProgramDay, $status) {
             
+            if($userProgramDay->status !== UserProgramStatus::STARTED) {
+                return;
+            }
+
             if ($userProgramDay->status === null) {
                 if ($userProgram->current_day < $userProgram->program->days_per_week) {
                     $userProgram->current_day++;
@@ -52,7 +57,7 @@ class UserProgramDayHelper {
                 }
                 $userProgram->save();
             }
-
+            
             $userProgramDay->update(['status' => $status]);
         });
     }

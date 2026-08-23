@@ -24,9 +24,22 @@ class ProgramFactory extends Factory
             'user_id' => User::factory(),
             'name' =>fake()->sentence(),
             'description' => fake()->paragraph(),
-            'weeks' => fake()->numberBetween(0,17),
-            'days_per_week' => fake()->numberBetween(0,8),
+            'weeks' => fake()->numberBetween(6,16),
+            'days_per_week' => fake()->numberBetween(6,7),
             'category' => ProgramCategory::STRENGTH
         ];
+    }
+
+    public function configure() {
+        return $this->afterCreating(function (Program $program) {
+            for ($week = 1; $week <= $program->weeks; $week++) {
+                for ($day = 1; $day <= $program->days_per_week; $day++) {
+                    $program->programDays()->create([
+                        'week_number' => $week,
+                        'day_number' => $day
+                    ]);
+                }
+            }
+        });
     }
 }

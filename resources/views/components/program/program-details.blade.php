@@ -15,15 +15,14 @@
         class="input min-h-30"
         name="program[description]"
         id="program[description]"
-        value="{{ $program ? $program->description : ''}}"
-        dataTest="programDescription">{{ $program ? $program->description : ''}}
-    </textarea>
+        data-test="programDescription"
+        >{{$program?$program->description:''}}</textarea>
 <h4 for="program_categories" class="label mb-2">Category</h4>
 <div class="grid grid-cols-3 gap-2" id="program_categories">
     @foreach (App\ProgramCategory::cases() as $category)
         <button
             type="button"
-            data-test="category-{{ $category->value }}"
+            data-testid="category-{{ $category->value }}"
             class="category btn btn-outlined flex-1 h-10 bg-gray-400 text-white hover:!bg-gray-600"
             value="{{ $category->value }}">
             {{ $category->label() }}
@@ -72,7 +71,7 @@
         </div>
     </div>
 @else
-        <x-form.field class="image" label="Image" name="program[image_path]" type="file" accept="image/*"></x-form.field>
+        <x-form.field dataTest="programImage" class="image" label="Image" name="program[image_path]" type="file" accept="image/*"></x-form.field>
         <input type="hidden" id="current_image" name="program[current_image]" value="">
 @endif
 

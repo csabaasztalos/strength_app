@@ -2,10 +2,11 @@
 
 use App\Models\Program;
 use App\Models\User;
+use App\UserRoles;
 use Illuminate\Http\UploadedFile;
 
 test('name is required', function() {
-    $user = User::factory()->create();
+    $user = User::factory()->create(['role' => UserRoles::COACH]);
     $this->actingAs($user);
 
     $response = $this->from('/program/create')->post('/program', [  'program' => [
@@ -23,7 +24,7 @@ test('name is required', function() {
 
 
 test('name is at least 3 character', function() {
-    $user = User::factory()->create();
+    $user = User::factory()->create(['role' => UserRoles::COACH]);
     $this->actingAs($user);
 
 
@@ -43,7 +44,7 @@ test('name is at least 3 character', function() {
 
 
 test('description is not required', function() {
-    $user = User::factory()->create();
+    $user = User::factory()->create(['role' => UserRoles::COACH]);
     $this->actingAs($user);
 
     $response = $this->from('/program/create')->post('/program', [  'program' => [
@@ -58,7 +59,7 @@ test('description is not required', function() {
 
 
 test('category is required', function() {
-    $user = User::factory()->create();
+    $user = User::factory()->create(['role' => UserRoles::COACH]);
     $this->actingAs($user);
 
     $response = $this->from('/program/create')->post('/program', [  'program' => [
@@ -74,9 +75,28 @@ test('category is required', function() {
     $this->assertDatabaseEmpty('program_days');
 });
 
+test('category must be valid', function() {
+    $user = User::factory()->create(['role' => UserRoles::COACH]);
+    $this->actingAs($user);
+
+    $response = $this->from('/program/create')->post('/program', [  'program' => [
+        'name' => 'Example name',
+        'description' => 'Example description',
+        'weeks' => 5,
+        'category' => 'example',
+        'days_per_week' => 5
+    ]]);
+
+    $response->assertSessionHasErrors('program.category');
+
+    $this->assertDatabaseEmpty('programs');
+    $this->assertDatabaseEmpty('program_days');
+});
+
+
 
 test('number of weeks is required', function() {
-    $user = User::factory()->create();
+    $user = User::factory()->create(['role' => UserRoles::COACH]);
     $this->actingAs($user);
 
     $response = $this->from('/program/create')->post('/program', [  'program' => [
@@ -94,7 +114,7 @@ test('number of weeks is required', function() {
 
 
 test('number of weeks is bigger than 0', function() {
-    $user = User::factory()->create();
+    $user = User::factory()->create(['role' => UserRoles::COACH]);
     $this->actingAs($user);
 
     $response = $this->from('/program/create')->post('/program', [  'program' => [
@@ -113,7 +133,7 @@ test('number of weeks is bigger than 0', function() {
 
 
 test('number of weeks is smaller than 31', function() {
-    $user = User::factory()->create();
+    $user = User::factory()->create(['role' => UserRoles::COACH]);
     $this->actingAs($user);
 
     $response = $this->from('/program/create')->post('/program', [  'program' => [
@@ -132,7 +152,7 @@ test('number of weeks is smaller than 31', function() {
 
 
 test('days per week is required', function() {
-    $user = User::factory()->create();
+    $user = User::factory()->create(['role' => UserRoles::COACH]);
     $this->actingAs($user);
 
     $response = $this->from('/program/create')->post('/program', [  'program' => [
@@ -150,7 +170,7 @@ test('days per week is required', function() {
 
 
 test('days per week is bigger than 0', function() {
-    $user = User::factory()->create();
+    $user = User::factory()->create(['role' => UserRoles::COACH]);
     $this->actingAs($user);
 
     $response = $this->from('/program/create')->post('/program', [  'program' => [
@@ -169,7 +189,7 @@ test('days per week is bigger than 0', function() {
 
 
 test('days per week is smaller than 8', function() {
-    $user = User::factory()->create();
+    $user = User::factory()->create(['role' => UserRoles::COACH]);
     $this->actingAs($user);
 
     $response = $this->from('/program/create')->post('/program', [  'program' => [
@@ -187,7 +207,7 @@ test('days per week is smaller than 8', function() {
 });
 
 test('image is not required', function() {
-    $user = User::factory()->create();
+    $user = User::factory()->create(['role' => UserRoles::COACH]);
     $this->actingAs($user);
 
     $response = $this->from('/program/create')->post('/program', [  'program' => [
@@ -204,7 +224,7 @@ test('image is not required', function() {
 
 test('program image upload is working', function() {
     Storage::fake('public');
-    $user = User::factory()->create();
+    $user = User::factory()->create(['role' => UserRoles::COACH]);
     $this->actingAs($user);
 
     $response = $this->from('/program/create')->post('/program', [  'program' => [
@@ -226,7 +246,7 @@ test('program image upload is working', function() {
 
 test('only image can be uploaded', function() {
     Storage::fake('public');
-    $user = User::factory()->create();
+    $user = User::factory()->create(['role' => UserRoles::COACH]);
     $this->actingAs($user);
 
     $response = $this->from('/program/create')->post('/program', [  'program' => [
@@ -243,7 +263,7 @@ test('only image can be uploaded', function() {
 
 test('program image must be an image', function() {
     Storage::fake('public');
-    $user = User::factory()->create();
+    $user = User::factory()->create(['role' => UserRoles::COACH]);
     $this->actingAs($user);
 
     $response = $this->from('/program/create')->post('/program', [  'program' => [

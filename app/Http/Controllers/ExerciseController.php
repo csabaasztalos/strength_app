@@ -69,17 +69,15 @@ class ExerciseController extends Controller
      */
     public function destroy(Exercise $exercise, Request $request)
     {
-        if ((int) $request['delete_exercise'] === $exercise->id)
-        {
-            $inProgram = $exercise->programDayExercises()->get();
-            if($inProgram->isEmpty()) {
-                $exercise->delete();
-                return redirect(route('exercises'))->with('success', 'Exercise successfully deleted!');
-            }
+        $inProgram = $exercise->programDayExercises()->get();
+
+        if($inProgram->isEmpty()) {
+            $exercise->delete();
+            return redirect(route('exercises'))->with('success', 'Exercise successfully deleted!');
         }
 
-        return redirect(route('exercises'));
-    }
+        return redirect(route('exercises'))->with('error', 'Exercise cannot be deleted!');
+}
 
 
     public function search(Request $request)

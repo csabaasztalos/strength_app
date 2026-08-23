@@ -24,8 +24,7 @@ class RegisteredUserController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoreUserRequest $request)
-    {
-        $user = User::create([$request]);
+    {   $user = User::create($request->validated());
 
         Auth::login($user);
         $user->sendEmailVerificationNotification();

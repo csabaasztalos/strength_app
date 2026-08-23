@@ -79,27 +79,29 @@
                         </form>
                     </div>
 
-                    <div class="flex justify-between mt-5">
-                        <form action="{{ route('user_program_day.changeStatus', [$day, App\UserProgramDayStatus::COMPLETED]) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
-                            <button class="btn btn-primary"><x-icons.white-check/>Complete Workout</button>
-                            <input type="hidden" name="userProgram" value="{{ $program }}">
-                            <input type="hidden" name="day_number" value="{{ $day->programDay->day_number }}">
-                            <input type="hidden" name="week_number" value="{{ $day->programDay->week_number }}">
-                        </form>
-
-                        <form action="{{ route('user_program_day.changeStatus', [$day, App\UserProgramDayStatus::SKIPPED]) }}" method="POST">
-                            @csrf
-                            @method('PATCH')
-                            <button class="btn bg-red-500 hover:bg-red-800"><x-icons.skip/>Skip Workout</button>
-                            <input type="hidden" name="userProgram" value="{{ $program }}">
-                            <input type="hidden" name="day_number" value="{{ $day->programDay->day_number }}">
-                            <input type="hidden" name="week_number" value="{{ $day->programDay->week_number }}">
-                        </form>
-                    </div>
+                    @if ($program->status === App\UserProgramStatus::STARTED)
+                        <div class="flex justify-between mt-5">
+                            <form action="{{ route('user_program_day.changeStatus', [$day, App\UserProgramDayStatus::COMPLETED]) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <button class="btn btn-primary"><x-icons.white-check/>Complete Workout</button>
+                                <input type="hidden" name="userProgram" value="{{ $program }}">
+                                <input type="hidden" name="day_number" value="{{ $day->programDay->day_number }}">
+                                <input type="hidden" name="week_number" value="{{ $day->programDay->week_number }}">
+                            </form>
+    
+                            <form action="{{ route('user_program_day.changeStatus', [$day, App\UserProgramDayStatus::SKIPPED]) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <button class="btn bg-red-500 hover:bg-red-800"><x-icons.skip/>Skip Workout</button>
+                                <input type="hidden" name="userProgram" value="{{ $program }}">
+                                <input type="hidden" name="day_number" value="{{ $day->programDay->day_number }}">
+                                <input type="hidden" name="week_number" value="{{ $day->programDay->week_number }}">
+                            </form>
+                        </div>
+                    @endif
                 </div>
             @endif
         @endforeach
     @endforeach
-       </x-card>
+</x-card>

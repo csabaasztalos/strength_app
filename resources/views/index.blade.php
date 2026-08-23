@@ -10,8 +10,8 @@
 
     <body class="bg-background text-foreground min-h-screen overflow-x-hidden">
         
-        <x-nav/>
-        <x-mobile-top-bar/>
+        <x-nav.nav/>
+        <x-nav.mobile-top-bar/>
 
         <main class="mx-auto h-full w-full bg-black pt-13 md:pt-6">
             <div class="mx-auto grid grid-cols-1 md:grid-cols-2 text-white mb-6">
@@ -114,7 +114,7 @@
         </main>
 
 
-        <x-mobile-nav />
+        <x-nav.mobile-nav />
         @session('success')
             <div id="message" class="bg-primary px-4 py-3 fixed bottom-4 right-4 rounded-lg">{{ $value }}</div>
         @endsession

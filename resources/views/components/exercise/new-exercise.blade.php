@@ -15,11 +15,16 @@
                         name="exercise[name]"
                         required="required"
                         placholder="Exemple name"
+                        dataTest="exerciseName"
                     />
         
                     <div class="space-y-2">
                          <label class="label mt-2" for="exercise[description]">Description</label>
-                         <textarea class="input min-h-40" id="exercise[description]" name="exercise[description]" placholder="Exemple description"></textarea>
+                         <textarea class="input min-h-40"
+                            id="exercise[description]"
+                            name="exercise[description]"
+                            placholder="Exemple description"
+                            data-test="exerciseDescription"></textarea>
                     </div>
         
                     <div>
@@ -28,7 +33,7 @@
                             @foreach (App\ExerciseCategory::cases() as $category)
                             <button
                                 type="button"
-                                data-test="category-{{ $category->value }}"
+                                data-test="category-new-{{ $category->value }}"
                                 class="category btn btn-outlined flex-1 h-10 bg-gray-400 text-white hover:!bg-gray-600"
                                 value="{{ $category->value }}">
                                 {{ $category->label() }}
@@ -45,7 +50,7 @@
                     </div>
 
                     <div>
-                        <button type="submit" class="btn btn-primray mt-2 mb-2">Save</button>
+                        <button type="submit" class="btn btn-primray mt-2 mb-2" data-test="createExercise">Save</button>
                     </div>
                 </div>
             </x-form>

@@ -1,5 +1,7 @@
 const container = document.querySelector('#programEditor');
 
+if (container) {
+    
 container.addEventListener('input', async event => {
 
     if (!event.target.classList.contains('exerciseSearch')) {
@@ -58,3 +60,5 @@ container.addEventListener('click', event => {
     exerciseRow.querySelector('.exerciseResults').innerHTML = '';
 
 });
+
+}

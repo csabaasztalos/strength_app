@@ -76,11 +76,11 @@ class UserProgramController extends Controller
         $user = $request->user();
         $userProgram = $user->userProgram()->where('id', $request['cancel_program.id'])->get();
 
-        if ($userProgram) {
+        if ($userProgram && $userProgram['status'] === UserProgramStatus::STARTED) {
             $user->userProgram()->where('id', $request['cancel_program.id'])->update(['status' => UserProgramStatus::CANCELLED]);
             return redirect(route('user.programs', [$user]))->with('success', 'Program successfully cancelled!');
         }
 
-        return redirect(route('user.programs', [$user]))->with('error', 'Program does not exist!');
+        return redirect(route('user.programs', [$user]))->with('error', 'You can\'t cancel this program!');
     }
 }

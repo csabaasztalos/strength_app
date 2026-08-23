@@ -1,4 +1,4 @@
-//
+
 const message = document.querySelector('#message');
 
 if (message) {

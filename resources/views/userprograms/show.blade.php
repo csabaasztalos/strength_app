@@ -1,6 +1,4 @@
 <x-layout>
-@vite('resources/js/toggleWeeks.js')
-@vite('resources/js/toggleDays.js')
     <div class="w-full mx-auto max-w-7xl px-4 mt-10">
         <div class="flex items-center justify-between">
             <div class="mt-4 mb-4">

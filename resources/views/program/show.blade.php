@@ -1,6 +1,4 @@
 <x-layout>
-@vite('resources/js/toggleWeeks.js')
-@vite('resources/js/toggleDays.js')
     <div class="w-full w-max-7xl mt-10 mb-6 mx-auto md:mt-6">
         <h1 class="text-3xl font-bold ">{{ $program->name }}</h1>
         <div>
@@ -39,8 +37,7 @@
                         <a href="{{ route('program.edit', $program) }}" class="btn btn-outlined bg-yellow-500/40">
                             Edit <x-icons.external/>
                         </a>
-                    @endif
-                    @if ($program->status === App\ProgramStatus::DRAFT)
+
                         <form method="POST" action="{{ route('program.publish', $program) }}">
                             @csrf
                             @method('PATCH')
@@ -48,6 +45,14 @@
                                     Publish<x-icons.check/>
                             </button>
                             <input type="hidden" value="{{ $program->id }}" name="publish_program_id">
+                        </form>
+
+                        <form method="POST" action="{{ route('program.delete', $program) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-outlined bg-red-500/40">
+                                Delete <x-icons.trash/>
+                            </button>
                         </form>
                     @elseif ($program->status === App\ProgramStatus::ACTIVE)
                         <form method="POST" action="{{ route('program.hide', $program) }}">
@@ -65,16 +70,6 @@
                                 Draft<x-icons.draft/>
                             </button>
                         </form>
-                    @endif
-    
-                    @if($program->status == App\ProgramStatus::DRAFT)
-                        <form method="POST" action="{{ route('program.delete', $program) }}">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-outlined bg-red-500/40">
-                            Delete <x-icons.trash/>
-                        </button>
-                    </form>
                     @endif
                 @endif
             </div>

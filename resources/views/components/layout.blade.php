@@ -15,12 +15,12 @@
 
     <body class="bg-background text-foreground min-h-screen overflow-x-hidden">
         
-        <x-nav/>
-        <x-mobile-top-bar/>
+        <x-nav.nav/>
+        <x-nav.mobile-top-bar/>
         <main class="mx-auto max-w-7xl w-full px-4 py-6 sm:px-6 lg:px-8 pb-24 md:pb-6">
             {{ $slot }}
         </main>
-        <x-mobile-nav />
+        <x-nav.mobile-nav />
         @session('success')
             <div id="message" class="bg-primary px-4 py-3 fixed bottom-4 right-4 rounded-lg z-200">{{ $value }}</div>
         @endsession

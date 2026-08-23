@@ -37,7 +37,7 @@ class UserProgramDayController extends Controller
 
         $weekNumber = (int) $request['week_number'];
         $dayNumber = (int) $request['day_number'];
-        
+
         $days = $helper->getNeighbouringDays($userProgram, $weekNumber, (int) $dayNumber);
         
         $programDayId = $userProgram->program->ProgramDays()
@@ -50,14 +50,18 @@ class UserProgramDayController extends Controller
 
         $maxWeeks = $userProgram->program->weeks;
         $maxDays = $userProgram->program->days_per_week;
-        
+
         if (($prevDayStatus !== null) ||
         ($weekNumber === 1 && $dayNumber === 1))
         {
             $helper->statusUpdate($userProgram, $userProgramDay, $status);
 
+            if ($userProgram->status !== UserProgramStatus::STARTED) {
+                return redirect(route('progression', [$userProgramDay->userProgram, $weekNumber, $dayNumber]))
+                ->with('error', 'You can\'t change this program anymore!');
+            }
+
             if ($weekNumber === $maxWeeks && $dayNumber === $maxDays) {
-                
                 $date = new DateTime('now', new DateTimeZone('UTC'));
                 $formattedTime = $date->format('Y-m-d H:i:s');
 

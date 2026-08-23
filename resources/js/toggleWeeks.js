@@ -1,6 +1,7 @@
 
-    const toggleBtns = document.querySelectorAll('.toggle-week-btn');
+const toggleBtns = document.querySelectorAll('.toggle-week-btn');
 
+if (toggleBtns) {
     toggleBtns.forEach(btn => {
         btn.addEventListener('click', function(event) {
             const card = this.closest('.programWeek');
@@ -23,3 +24,4 @@
             }
         });
     });
+}
