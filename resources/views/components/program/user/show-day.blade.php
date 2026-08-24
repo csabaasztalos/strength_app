@@ -10,7 +10,8 @@
         <a @if((int) $previous_day && (int) $previous_week)
                     href="{{ route('progression', [$program, $previous_week, $previous_day]) }}"
                 @endif
-            class="rotate-180 mt-1" title="previous">
+            class="rotate-180 mt-1" title="previous"
+            data-test="previousDay">
             <x-icons.arrow/>
         </a>
         <h1 class="text-2xl font-bold">
@@ -23,7 +24,8 @@
         <a @if((int) $next_day && (int) $next_week)
                     href="{{ route('progression', [$program, $next_week, $next_day]) }}"
                 @endif
-            class="mt-1" title="next">
+            class="mt-1" title="next"
+            data-test="nextDay">
             <x-icons.arrow/>
         </a>
     </div>
@@ -84,7 +86,7 @@
                             <form action="{{ route('user_program_day.changeStatus', [$day, App\UserProgramDayStatus::COMPLETED]) }}" method="POST">
                                 @csrf
                                 @method('PATCH')
-                                <button class="btn btn-primary"><x-icons.white-check/>Complete Workout</button>
+                                <button class="btn btn-primary" data-test="completeWorkout"><x-icons.white-check/>Complete Workout</button>
                                 <input type="hidden" name="userProgram" value="{{ $program }}">
                                 <input type="hidden" name="day_number" value="{{ $day->programDay->day_number }}">
                                 <input type="hidden" name="week_number" value="{{ $day->programDay->week_number }}">
@@ -93,7 +95,7 @@
                             <form action="{{ route('user_program_day.changeStatus', [$day, App\UserProgramDayStatus::SKIPPED]) }}" method="POST">
                                 @csrf
                                 @method('PATCH')
-                                <button class="btn bg-red-500 hover:bg-red-800"><x-icons.skip/>Skip Workout</button>
+                                <button class="btn bg-red-500 hover:bg-red-800" data-test="skipWorkout"><x-icons.skip/>Skip Workout</button>
                                 <input type="hidden" name="userProgram" value="{{ $program }}">
                                 <input type="hidden" name="day_number" value="{{ $day->programDay->day_number }}">
                                 <input type="hidden" name="week_number" value="{{ $day->programDay->week_number }}">

@@ -4,7 +4,7 @@
 
 <x-card>
     <div>
-        <a href="{{ route('program.show', $program) }}">
+        <a href="{{ route('program.show', $program) }}" class="w-fit" data-test="showProgram">
             <h3 class="text font-bold text-lg mb-2 flex gap-2">{{ $program->name }}<x-icons.arrow/></h3>
         </a>
     </div>

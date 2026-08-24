@@ -26,7 +26,8 @@ class ProgramFactory extends Factory
             'description' => fake()->paragraph(),
             'weeks' => fake()->numberBetween(6,16),
             'days_per_week' => fake()->numberBetween(6,7),
-            'category' => ProgramCategory::STRENGTH
+            'category' => ProgramCategory::STRENGTH,
+            'status' => ProgramStatus::ACTIVE
         ];
     }
 

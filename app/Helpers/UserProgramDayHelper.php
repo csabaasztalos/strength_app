@@ -44,7 +44,7 @@ class UserProgramDayHelper {
     public function statusUpdate (UserProgram $userProgram, UserProgramDay $userProgramDay, UserProgramDayStatus $status) {
         DB::transaction(function() use ($userProgram, $userProgramDay, $status) {
             
-            if($userProgramDay->status !== UserProgramStatus::STARTED) {
+            if($userProgram->status !== UserProgramStatus::STARTED) {
                 return;
             }
 

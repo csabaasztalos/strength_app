@@ -8,7 +8,9 @@ use App\UserRoles;
 test('can edit a draft program\'s details', function () {
     $user = User::factory()->create(['role' => UserRoles::COACH]);
 
-    $program = Program::factory()->create([]);
+    $program = Program::factory()->create([
+        'status' => ProgramStatus::DRAFT
+    ]);
 
     $programDays = [];
 
@@ -48,7 +50,6 @@ test('active program is not editable', function () {
     $user = User::factory()->create(['role' => UserRoles::COACH]);
 
     $program = Program::factory()->create([
-        'status' => ProgramStatus::ACTIVE,
         'name' => 'Not example name',
         'description' => 'Example description',
         'category' => 'rehab',
@@ -134,5 +135,3 @@ test('hidden program is not editable', function () {
         'days_per_week' => 5,
     ]);
 });
-
-//TODO:: drat, publish, delete, hide

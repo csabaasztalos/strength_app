@@ -62,6 +62,7 @@ class UserProgramDayController extends Controller
             }
 
             if ($weekNumber === $maxWeeks && $dayNumber === $maxDays) {
+               
                 $date = new DateTime('now', new DateTimeZone('UTC'));
                 $formattedTime = $date->format('Y-m-d H:i:s');
 

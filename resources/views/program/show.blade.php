@@ -27,7 +27,7 @@
                 @if ($program->status === App\ProgramStatus::ACTIVE)
                     <form method="POST" action="{{ route('user_program.start', $program) }}">
                         @csrf
-                        <button type="submit" class="btn btn-outlined bg-black text-white">
+                        <button type="submit" class="btn btn-outlined bg-black text-white" data-test="startProgram">
                             Start Program
                         </button>
                     </form>
@@ -41,7 +41,7 @@
                         <form method="POST" action="{{ route('program.publish', $program) }}">
                             @csrf
                             @method('PATCH')
-                            <button type="submit" class="btn btn-outlined bg-green-500/40">
+                            <button type="submit" class="btn btn-outlined bg-green-500/40" data-test="publishProgram">
                                     Publish<x-icons.check/>
                             </button>
                             <input type="hidden" value="{{ $program->id }}" name="publish_program_id">
@@ -50,7 +50,7 @@
                         <form method="POST" action="{{ route('program.delete', $program) }}">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-outlined bg-red-500/40">
+                            <button type="submit" class="btn btn-outlined bg-red-500/40" data-test="deleteProgram">
                                 Delete <x-icons.trash/>
                             </button>
                         </form>
@@ -58,7 +58,7 @@
                         <form method="POST" action="{{ route('program.hide', $program) }}">
                             @csrf
                             @method('PATCH')
-                            <button type="submit" class="btn btn-outlined bg-gray-500/40">
+                            <button type="submit" class="btn btn-outlined bg-gray-500/40" data-test="hideProgram">
                                 Hide<x-icons.hide/>
                             </button>
                         </form>
@@ -66,7 +66,7 @@
                         <form method="POST" action="{{ route('program.draft', $program) }}">
                             @csrf
                             @method('PATCH')
-                            <button type="submit" class="btn btn-outlined bg-gray-500/40">
+                            <button type="submit" class="btn btn-outlined bg-gray-500/40" data-test="draftProgram">
                                 Draft<x-icons.draft/>
                             </button>
                         </form>

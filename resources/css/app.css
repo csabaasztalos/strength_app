@@ -20,3 +20,7 @@
     --color-input: oklch(0.9 0 0);
     --color-muted-foreground: oklch(0.55 0 0);
 }
+
+html {
+    scrollbar-gutter: stable;
+}

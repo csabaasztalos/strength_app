@@ -1,8 +1,10 @@
-const categoryBtns = document.querySelectorAll('.category');
 const hiddenInput = document.querySelector('#category');
-const currentCategory = hiddenInput.value;
 
-if(categoryBtns) {
+if(hiddenInput) {
+    const categoryBtns = document.querySelectorAll('.category');
+    const currentCategory = hiddenInput.value;
+
+
     if (currentCategory) {
         const activeButton = document.querySelector(`.category[value="${currentCategory}"]`);
 
