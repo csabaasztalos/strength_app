@@ -1,5 +1,5 @@
 <x-layout>
-    <div class="w-full max-w-7xl mt-10 mb-6 mx-auto md:mt-6">
+    <div class="w-full max-w-7xl mt-10 mx-auto md:mt-6">
         <div class="font-bold text-2xl mt-6 mb-6"><h1>Current programs</h1></div>
         <details class="relative group mb-2 inline-block">
             <summary class="list-none cursor-pointer rounded-xl bg-[oklch(0.25_0.03_268)] text-white px-4 py-3 select-none flex items-center justify-between">

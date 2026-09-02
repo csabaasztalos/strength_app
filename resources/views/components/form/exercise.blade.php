@@ -8,23 +8,25 @@
             <div class="ml-2 xl:ml-0">
                 <div class="relative">
                     <b>
+                        <p class="label mt-2 mb-2">Name</p>
                         <x-form.field
-                            label="Name"
                             class="input exerciseSearch"
                             value="{{ $programExercise->exercise->name }}"
                             required="required"
                             type="text"
+                            displayErrors="false"
                         />
                     </b>
                         <x-form.field
                             class="input exerciseId"
                             name="weeks[{{ $weekNumber }}][days][{{ $dayId }}][exercises][{{ $programExercise->id }}][exercise_id]"
-                            value="{{ $programExercise->exercise->name }}"
+                            value="{{ $programExercise->exercise_id}}"
                             required="required"
                             type="hidden"
+                            displayErrors="false"
                         />
-                    <div class="absolute w-full mt-1 bg-white rounded-lg shadow-lg max-h-60 overflow-y-auto">
-                        <ul class="divide-y divide-gray-100 exerciseResults">
+                    <div class="absolute z-20 w-full mt-1 bg-white rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                        <ul class="divide-y divide-gray-200 exerciseResults">
                         </ul>
                     </div>
                 </div>
@@ -40,6 +42,7 @@
                     type="number"
                     min="1"
                     max="30"
+                    displayErrors="false"
                 />
             </div>
             <div class="space-y-2 ml-2">
@@ -52,6 +55,7 @@
                     type="number"
                     min="1"
                     max="50"
+                    displayErrors="false"
                 />
             </div>
             <div class="space-y-2 ml-2">
@@ -62,7 +66,8 @@
                     value="{{ $programExercise->percentage }}"
                     type="number"
                     min="1"
-                    max="100"
+                    max="200"
+                    displayErrors="false"
                 />
             </div>
             <div class="space-y-2 ml-2">
@@ -75,6 +80,7 @@
                     min="1"
                     max="10"
                     step="0.5"
+                    displayErrors="false"
                 />
             </div>
             <div class="space-y-2 ml-2">
@@ -87,22 +93,30 @@
                     min="0"
                     max="120"
                     step="0.5"
+                    displayErrors="false"
                 />
             </div>
             <div class="space-y-2 ml-2">
                 <x-form.field
                     label="Position"
-                    class="input positions"
-                    name="weeks[{{ $weekNumber }}][days][{{ $dayId }}][exercises][{{ $programExercise->id }}][position]"
+                    class="input positions currentPositions"
                     value="{{ $programExercise->position }}"
                     type="number"
                     required="required"
                     min="1"
                     max="100"
+                    displayErrors="false"
                 />
             </div>
-            <div class="flex items-center mt-8">
+            <div class="flex items-center mt-8 ml-2">
                 @if (!$show)
+                    <div class="grid grid-cols-2">
+                        <p class="label">RM?</p>
+                        <input type="checkbox" name="weeks[{{ $weekNumber }}][days][{{ $dayId }}][exercises][{{ $programExercise->id }}][RM]"
+                        title="Checking this will ignore RPE. If percentage is not empty, then it will be displayed like this: 90% of XRM."
+                        @if ($programExercise->rep_max === 1) checked @endif
+                        >
+                    </div>
                     <button class="btn bg-red-500 text-white ml-2 text-sm delete-exercise" type="button">X</button>
                 @endif
             </div>
@@ -110,18 +124,11 @@
     </div>
 
     <x-form.field
-        class=""
-        name="weeks[{{ $weekNumber }}][days][{{ $dayId }}][exercises][{{ $programExercise->id }}][exercise_id]"
-        value="{{ $programExercise->exercise->id }}"
-        required="required"
-        type="hidden"
-    />
-
-    <x-form.field
         class="programExerciseId"
         value="{{ $programExercise->id }}"
         required="required"
         type="hidden"
+        displayErrors="false"
     />
 </div>
 

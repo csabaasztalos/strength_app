@@ -9,8 +9,8 @@ use App\Models\UserProgram;
 use DB;
 
 final class StoreUserProgram {
-    public function handle(Program $program, User $user): UserProgram {
-        return DB::transaction(function () use ($program, $user) {
+    public function handle(Program $program, User $user, array $userMaxes): UserProgram {
+        return DB::transaction(function () use ($program, $user, $userMaxes) {
 
             $userProgram = UserProgram::create([
                 'user_id' => $user->id,
@@ -25,6 +25,16 @@ final class StoreUserProgram {
             }
 
             $userProgram->userProgramDays()->createMany($userDays);
+
+            if (!empty($userMaxes)) {
+                $maxes = array_filter($userMaxes, function ($row) {
+                    return !is_null($row['max']) && $row['max'] !== '';
+                });
+
+                if(!empty($maxes)) {
+                    $userProgram->userProgramExerciseMaxes()->createMany($maxes);
+                }
+            }
 
             return $userProgram;
         });

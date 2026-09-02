@@ -1,4 +1,3 @@
-creates a program will fail due to pest can't upload files yet
 <?php
 
 use App\Models\Program;
@@ -6,46 +5,6 @@ use App\Models\User;
 use App\ProgramStatus;
 use App\UserRoles;
 use Illuminate\Http\UploadedFile;
-
-it('creates a program', function() {
-     $user = User::factory()->create([
-        'name' => 'Example Name',
-        'email' => 'name@example.com',
-        'password' => 'password123',
-        'email_verified_at' => now(),
-        'role' => UserRoles::COACH
-    ]);
-
-    visit('/')
-        ->click('Sign In')
-        ->assertPathIs('/signin')
-        ->fill('email', $user->email)
-        ->fill('password', 'password123')
-        ->click('@login-button')
-        ->assertPathIs('/')
-
-        ->click('New program')
-        ->assertPathIs('/program/create')
-        ->fill('@programName', 'Example Name')
-        ->click('@category-rehab')
-        ->fill('@programWeeks', '2')
-        ->fill('@programDays', '2')
-        ->fill('@programDescription', 'Example Description')
-        ->attach('@programImage', realpath(Storage::url('assets/deadlift.jpg')))
-        ->click('@save-program')
-        
-        ->assertPathIs('/program/1/edit');
-        
-        $this->assertDatabaseHas('programs', [
-            'id' => 1,
-            'user_id' => $user->id,
-            'name' => 'Example Name',
-            'description' => 'Example Description',
-            'weeks' => 2,
-            'days_per_week' => 2
-        ]);
-});
-
 
 it('changes program status to hidden', function() {
     $user = User::factory()->create([

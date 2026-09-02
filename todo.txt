@@ -117,3 +117,12 @@ errormessages
 
 testing:
 how to do user verification test?
+
+
+
+
+5.5 table view?
+
+
+888. save days separalty
+889. copy days for all weeks

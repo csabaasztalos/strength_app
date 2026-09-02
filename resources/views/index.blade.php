@@ -8,13 +8,13 @@
         <link rel="icon" type="image/x-icon" href="{{ Storage::url('assets/dogpacklogo.png') }}">
     </head>
 
-    <body class="bg-background text-foreground min-h-screen overflow-x-hidden">
+    <body class="bg-background text-foreground min-h-screen overflow-x-hidden mx-0 my-0 px-0 py-0">
         
         <x-nav.nav/>
         <x-nav.mobile-top-bar/>
-
-        <main class="mx-auto h-full w-full bg-black pt-13 md:pt-6">
-            <div class="mx-auto grid grid-cols-1 md:grid-cols-2 text-white mb-6">
+        
+        <main class="mx-auto h-full w-full bg-black pt-13 md:pt-6 pb-0">
+            <div class="mx-auto grid size-[80%] grid-cols-1 md:grid-cols-2 text-white mb-6">
                 <div class="flex flex-col text-center md:text-left px-10 lg:px-20 justify-center">
                     <h1 class="text-5xl lg:text-7xl font-bold">Train smarter,</h1>
                     <h1 class="text-2xl lg:text-5xl font-bold">progress faster!</h1>
@@ -33,7 +33,7 @@
                 </div>
             </div>
             
-            <div class="max-w-7xl mx-auto my-20 flex flex-col">
+            <div class="max-w-7xl mx-auto mt-20 flex flex-col">
                 <h1 class="font-bold text-4xl lg:text-6xl mt-0 lg:mt-6 px-10 lg:px-0 text-white">Find the perfect program for you</h1>
                 <hr class="my-6 border-3 w-1/2 border-primary mx-10 lg:mx-0">
 
@@ -46,21 +46,21 @@
                             Backed with years of coaching experience and training.
                         </h1>
                     </div>
-                    <div class="mx-10">
+                    <div class="mx-10 flex justify-center">
                         <img
-                        src="{{ Storage::url('assets/deadlift.jpg') }}"
-                        alt="deadlift"
-                        class="w-full h-100 lg:h-150 object-cover"
+                        src="{{ Storage::url('assets\phone1.1.png') }}"
+                        alt="screenshot"
+                        class="w-67 h-112 lg:h-150 lg:w-89 object-cover"
                         >
                     </div>
                 </div>
 
                 <div class="flex flex-col-reverse md:grid md:grid-cols-2 text-white mt-20">
-                    <div class="mx-10">
+                    <div class="mx-10 flex justify-center">
                         <img
-                        src="{{ Storage::url('assets/deadlift.jpg') }}"
-                        alt="deadlift"
-                        class="w-full h-100 lg:h-150 object-cover"
+                        src="{{ Storage::url('assets\phone2.png') }}"
+                        alt="screenshot"
+                        class="w-67 h-112 lg:h-150 lg:w-89 object-cover"
                         >
                     </div>
 
@@ -74,52 +74,22 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 text-white mt-20">
-                        <div class="flex flex-col mx-10">
+                <div class="flex flex mx-10 mt-20 mb-10 justify-center">
+                    <div class="flex flex-col items-center">
                         <h1 class="font-bold text-2xl lg:text-3xl mt-6 text-primary">Easy, quick access</h1>
                         <h1 class="font-bold text-lg lg:text-xl mt-6 text-muted-foreground mb-6 lg:mb-0">
-                            This application is design for quick and relaibe use.
+                            This application is designed for quick and relaibe use.
+                        </h1>
+                        <h1 class="font-bold text-lg lg:text-xl text-muted-foreground mb-6 lg:mb-0">
                             Choose between dozens of well tailored programs.
                         </h1>
                     </div>
-                    <div class="mx-10">
-                        <img
-                        src="{{ Storage::url('assets/deadlift.jpg') }}"
-                        alt="deadlift"
-                        class="w-full h-100 lg:h-150 object-cover"
-                        >
-                    </div>
+                </div>
+                <div class="flex flex mx-10 mb-10 justify-center">
+                    <p class="text-muted-foreground">© Copyright DogPack 2026</p>
                 </div>
             </div>
-            <!--
-            <div class="w-full mx-auto text-white relative">
-                <img
-                    src="{{ Storage::url('assets/gurph.jpg') }}"
-                    alt="deadlift"
-                    class="w-3/4 mx-auto md:h-175 object-fit backdrop-blur-sm"
-                >
-                <div class="absolute top-0 left-0 w-full md:h-175 bg-black opacity-50"></div>
-                <div class="absolute top-0 left-0 w-1/5 md:h-175 bg-black opacity-60"></div>
-                <div class="absolute top-0 left-0 w-1/6 md:h-175 bg-black opacity-70"></div>
-                <div class="absolute top-0 left-0 w-1/7 md:h-175 bg-black opacity-80"></div>
-                <div class="absolute top-0 right-0 w-1/5 md:h-175 bg-black opacity-60"></div>
-                <div class="absolute top-0 right-0 w-1/6 md:h-175 bg-black opacity-70"></div>
-                <div class="absolute top-0 right-0 w-1/7 md:h-175 bg-black opacity-80"></div>
-                <div class="z-50 absolute top-[50%] left-[50%] w-50 translate-x-[-50%] translate-y-[-50%] text-center">
-                    <h1 class="font-bold text-3xl mb-2">Sign up now!</h1>
-                    <button class="btn btn-primary w-20 left-0">Sign Up</button>
-                    <button class="btn bg-white text-black w-20 left-0 hover:bg-gray-300">Sign Up</button>
-                </div>
-            </div>-->
         </main>
-
-
         <x-nav.mobile-nav />
-        @session('success')
-            <div id="message" class="bg-primary px-4 py-3 fixed bottom-4 right-4 rounded-lg">{{ $value }}</div>
-        @endsession
-        @session('error')
-            <div id="message" class="bg-red-500 px-4 py-3 fixed bottom-4 right-4 rounded-lg text-white">{{ $value }}</div>
-        @endsession
     </body>
 </html>

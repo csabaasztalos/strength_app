@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use App\ExerciseCategory;
 use Illuminate\Contracts\Validation\ValidationRule;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -31,4 +32,6 @@ class StoreExerciseRequest extends FormRequest
             'exercise.category' => ['required', 'string', Rule::enum(ExerciseCategory::class)]
         ];
     }
+
+    protected $errorBag = 'newExerciseModal';
 }

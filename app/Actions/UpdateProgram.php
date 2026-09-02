@@ -2,43 +2,58 @@
 
 namespace App\Actions;
 
-use Amp\Http\Server\Request;
 use App\Http\Requests\UpdateProgramRequest;
 use App\Models\Program;
 use App\Models\ProgramDay;
 use App\Models\ProgramDayExercise;
-use App\ProgramStatus;
 use DB;
+use Exception;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 final class UpdateProgram {
     public function handle(Program $program, UpdateProgramRequest $request): void {
-        DB::transaction(function() use ($request, $program) {
+        $positionChanged = false;
+        
+        DB::transaction(function() use ($request, $program, &$positionChanged) {
             $oldWeeks = (int) $program->weeks;
             $oldDays = (int) $program->days_per_week;
-
+        
             $this->updateProgramDayNames($program, $request['days']);
-
+            
             $program->update($request['program']);
 
             if ($request['program']['current_image'] === null && $request->hasFile('program.image_path')) {
                 $this->updateProgramImage($request, $program);
             }
 
-            if((int) $program->weeks !== $oldWeeks  ||
+            if ((int) $program->weeks !== $oldWeeks  ||
                 (int) $program->days_per_week !== $oldDays
             ) {
                 $this->updateProgramDays($program, (int) $program->weeks, (int) $program->days_per_week);
             }
 
-            if(!empty($request['weeks'])) {
-                $this->updateProgramDayExcercises($program, $request['weeks']);
+            if ($request['deleted_program_exercises']) {
+                $this->deleteProgramDayExercises($request['deleted_program_exercises']);
+                $positionChanged = true;
+            }
+            
+            if (!empty($request['positions'])) {
+                $this->updatePositions($request['positions']);
+                $positionChanged = true;
             }
 
-            if($request['deleted_program_exercises']) {
-                $this->deleteProgramDayExercises($request['deleted_program_exercises']);
+            if (!empty($request['weeks'])) {
+                $this->updateProgramDayExcercises($program, $request['weeks']);
+                $positionChanged = true;
             }
+
+            return $positionChanged;
         });
+
+        if ($positionChanged) {
+            $this->normalizePositions($program);
+        }
     }
 
 
@@ -85,21 +100,55 @@ final class UpdateProgram {
         foreach ($weeks as $weekNumber => $weekData) {
             foreach($weekData['days'] as $dayId => $exercises) {
                 $day = $program->programDays()->findOrFail($dayId);
+                
 
                 if(array_key_exists('exercises', $exercises)) {
+                    
                     foreach($exercises['exercises'] as $programExerciseId => $exerciseData) {
                         $programExercise = $day->programDayExercises()
                             ->findOrFail($programExerciseId);
                         
-                        $programExercise->update($exerciseData);
+                        if(array_key_exists('RM', $exerciseData)) {
+                            (int) $exerciseData['percentage'] === 100
+                            ? $percentage = null
+                            : $percentage = $exerciseData['percentage'];
+
+                            $programExercise->update([
+                                'sets' => $exerciseData['sets'],
+                                'reps' => $exerciseData['reps'],
+                                'rpe' => null,
+                                'duration_minutes' => $exerciseData['duration_minutes'],
+                                'rep_max' => true,
+                                'percentage' => $percentage
+                            ]);
+                        } else {
+                            $programExercise->update(['rep_max' => false, ...$exerciseData]);
+                        }
                     }
                 }
 
                 if (array_key_exists('new_exercises', $exercises)) {
                     foreach($exercises['new_exercises'] as $exerciseNumber => $exerciseData) {
                         $programExercise = $day->programDayExercises();
-                        $programExercise->create($exerciseData);
-                    
+
+                        if(array_key_exists('RM', $exerciseData)) {
+                            (int) $exerciseData['percentage'] === 100
+                            ? $percentage = null
+                            : $percentage = $exerciseData['percentage'];
+
+                            $programExercise->create([
+                                'exercise_id' => $exerciseData['exercise_id'],
+                                'sets' => $exerciseData['sets'],
+                                'reps' => $exerciseData['reps'],
+                                'rpe' => null,
+                                'duration_minutes' => $exerciseData['duration_minutes'],
+                                'rep_max' => true,
+                                'percentage' => $percentage,
+                                'position' => $exerciseData['position']
+                            ]);
+                        } else {
+                            $programExercise->create(['rep_max' => false, ...$exerciseData]);
+                        }
                     }
                 }
             }
@@ -109,7 +158,71 @@ final class UpdateProgram {
 
     private function deleteProgramDayExercises(array $deletedExercises): void  {
         $deleteIds = explode(',', $deletedExercises[0]);
-        
         ProgramDayExercise::whereIn('id', $deleteIds)->delete();
+    }
+
+    //$positions = exercise_id => new_position, exercise_id => new_position]
+    private function updatePositions(array $positions): void {
+        $updatedPositions = [];
+
+        foreach ($positions as $exerciseId => $newPosition) {
+            if ($newPosition !== null) {
+                $exercise = ProgramDayExercise::findOrFail($exerciseId);
+
+                $oldPosition = $exercise->position;
+
+                if($oldPosition !== $newPosition) {
+                    $updatedPositions[] = [
+                        'id' => $exerciseId,
+                        'new_position' => $newPosition,
+                        'program_day_id' => $exercise->program_day_id
+                    ];
+                }
+            }
+        }
+
+        if (empty($updatedPositions)) {
+            return;
+        }
+
+        foreach ($updatedPositions as $exercise) {
+            ProgramDayExercise::whereId($exercise['id'])
+                ->update(['position' => -1 * (int) $exercise['id']]);
+        }
+
+        foreach ($updatedPositions as $exercise) {
+            if(ProgramDayExercise::select()->where([
+                    'position' => $exercise['new_position'],
+                    'program_day_id' => $exercise['program_day_id']
+                ])->exists()) {
+
+                throw ValidationException::withMessages([
+                    'position' => 'Two exercises position cannot be the same.',
+                ]);
+            }
+
+            ProgramDayExercise::whereId($exercise['id'])
+                ->update(['position' => (int) $exercise['new_position']]);
+        }
+    }
+
+
+    private function normalizePositions(Program $program): void {
+        $programDays =
+            $program->programDays;
+        
+        foreach ($programDays as $day) {
+            $exercises = $day
+                ->programDayExercises()
+                ->orderBy('position')
+                ->get();
+
+            foreach($exercises as $index=>$exercise) {
+                $position = $index+1;
+                if((int) $exercise->position !== $position) {
+                    ProgramDayExercise::find($exercise->id)->update(['position' => $position]);
+                }
+            }
+        }
     }
 }

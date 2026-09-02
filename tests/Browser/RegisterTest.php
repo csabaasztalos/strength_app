@@ -1,5 +1,7 @@
 <?php
 
+use Nette\Schema\Expect;
+
 it('registers a user', function() {
     visit('/')
         ->click('Sign Up')
@@ -12,9 +14,12 @@ it('registers a user', function() {
         ->assertPathIs('/email/verify');
 
     $this->assertAuthenticated();
+
     expect(Auth::user())->toMatchArray([
         'name' => 'Example Name',
         'email' => 'name@example.com',
         'role' => App\UserRoles::ATHLETE->value
     ]);
+
+    expect(Auth::user()->hasVerifiedEmail())->toBeFalse();
 });

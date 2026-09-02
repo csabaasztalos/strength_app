@@ -13,7 +13,7 @@ test('name is required', function() {
         'category' => 'powerlifting'
     ]]);
 
-    $response->assertSessionHasErrors('exercise.name');
+    $response->assertSessionHasErrorsIn('newExerciseModal', ['exercise.name']);
 
     $this->assertDatabaseEmpty('exercises');
 });
@@ -30,7 +30,7 @@ test('name is at least 3 character', function() {
         'category' => 'powerlifting'
     ]]);
 
-    $response->assertSessionHasErrors('exercise.name');
+    $response->assertSessionHasErrorsIn('newExerciseModal', ['exercise.name']);
 
     $this->assertDatabaseEmpty('exercises');
 });
@@ -65,7 +65,7 @@ test('category is required', function() {
         'description' => 'Example description'
     ]]);
 
-   $response->assertSessionHasErrors('exercise.category');
+    $response->assertSessionHasErrorsIn('newExerciseModal', ['exercise.category']);
 
     $this->assertDatabaseEmpty('exercises');
 });
@@ -82,7 +82,7 @@ test('category must be valid', function() {
         'category' => 'example',
     ]]);
 
-   $response->assertSessionHasErrors('exercise.category');
+    $response->assertSessionHasErrorsIn('newExerciseModal', ['exercise.category']);
 
     $this->assertDatabaseEmpty('exercises');
 });

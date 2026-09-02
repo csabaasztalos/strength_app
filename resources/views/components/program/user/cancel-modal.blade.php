@@ -1,7 +1,7 @@
 <dialog class="backdrop:bg-black/50 backdrop:backdrop-blur-xs m-auto" style="background: transparent !important; border: 0 !important; padding: 0 !important;"  id="cancelConfirm">
     <div class="rounded-xl overflow-hidden max-w-2xl max-h-[80dvh] mx-auto shadow-2xl">
         <x-card class="w-full h-full overflow-hidden relative">
-            <div class="flex items absolute top-5 right-5"><a class="btn btn-outlined text-gray-500" class="modalClose">X</a></div>
+            <div class="flex items absolute top-5 right-5"><a class="btn btn-outlined text-gray-500 modalClose">X</a></div>
             <form
                 action="{{ route('user_program.cancel') }}"
                 method="POST"

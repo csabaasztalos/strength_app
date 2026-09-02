@@ -20,6 +20,7 @@ Route::middleware(['auth', 'role:coach'])->group(function () {
     Route::post('/program', [ProgramController::class, 'store'])->name('program.store');
     Route::get('/program/{program}/edit', [ProgramController::class, 'edit'])->name('program.edit');
     Route::patch('/program/{program}/update', [ProgramController::class, 'update'])->name('program.update');
+    Route::patch('/program/{program}/apply-to-all-weeks', [ProgramController::class, 'apply'])->name('program.copy_weeks');
     Route::patch('/program/{program}/publish', [ProgramController::class, 'publish'])->name('program.publish');
     Route::patch('/program/{program}/draft', [ProgramController::class, 'draft'])->name('program.draft');
     Route::patch('/program/{program}/hide', [ProgramController::class, 'hide'])->name('program.hide');

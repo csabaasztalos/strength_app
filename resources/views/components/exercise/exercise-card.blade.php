@@ -10,7 +10,9 @@
                     data-id="{{ $exercise->id }}"
                     data-name="{{ $exercise->name }}"
                     data-description="{{ $exercise->description }}"
-                    data-category="{{ $exercise->category }}">
+                    data-category="{{ $exercise->category }}"
+                    data-percentagebase="{{ $exercise->percentageBasedOnExercise?->name }}"
+                    data-percentagebaseid="{{ $exercise->percentageBasedOnExercise?->id }}">
                     Edit <x-icons.external/>
                 </a>
                     <form method="POST" action="{{ route('exercise.delete', $exercise) }}">
@@ -27,8 +29,8 @@
         <div><btn class="btn btn-outlined cursor-default bg-gray-200 line-clamp-1 text-center">{{ $exercise->category->label() }}</btn></div>
             <div class="flex flex-col items-start ml-2">
                 <p class="text-muted-foreground">id: {{ $exercise->id }}</p>
-                <p class="text-muted-foreground">created: {{ date_format($exercise->created_at, 'Y.h.d' ) }}</p>
-                <p class="text-muted-foreground">updated: {{ date_format($exercise->updated_at, 'Y.h.d' ) }}</p>
+                <p class="text-muted-foreground">created: {{ date_format($exercise->created_at, 'Y.m.d' ) }}</p>
+                <p class="text-muted-foreground">updated: {{ date_format($exercise->updated_at, 'Y.m.d' ) }}</p>
             </div>
         </div>
     </li>

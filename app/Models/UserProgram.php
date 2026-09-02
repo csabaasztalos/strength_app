@@ -38,4 +38,8 @@ class UserProgram extends Model
     public function userProgramDays(): HasMany {
         return $this->HasMany(UserProgramDay::class);
     }
+
+    public function userProgramExerciseMaxes(): HasMany {
+        return $this->HasMany(UserProgramExerciseMaxes::class);
+    }
 }

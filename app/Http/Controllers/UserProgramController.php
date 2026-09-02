@@ -21,7 +21,11 @@ class UserProgramController extends Controller
             abort(404);
         }
 
-        $userPrograms = $user->userProgram()->with('program')->orderByDesc('created_at')->get();
+        $userPrograms = $user->userProgram()
+            ->with('program')
+            ->orderByDesc('created_at')
+            ->paginate(4)
+            ->withQueryString();
 
         return view('userprograms.index', ['programs' => $userPrograms]);
     }
@@ -34,8 +38,12 @@ class UserProgramController extends Controller
         }
 
         if(($user->userProgram()->where('status', UserProgramStatus::STARTED)->count()) < 2) {
-            $action->handle($program, $user);
-
+            if($request->has('user_maxes')) {
+                $action->handle($program, $user, $request['user_maxes']);
+            } else {
+                $action->handle($program, $user, []);
+            }
+            
             return redirect(route('programs'))->with('success', 'Successfully started '. $program->name .'!');
 
         } else {
@@ -50,12 +58,24 @@ class UserProgramController extends Controller
             abort(404);
         }
 
-        $programDays =
-            $userProgram
+        $programDays = $userProgram
             ->userProgramDays()
-            ->with('programday.programDayExercises.exercise')
+            ->with([
+                'programday.programDayExercises.exercise',
+                'userProgram.userProgramExerciseMaxes'
+            ])
             ->get()
-            ->groupBy('programDay.week_number');
+            ->groupBy('programDay.week_number')
+            ->map(function ($days) {
+                return $days->map(function ($day) {
+
+                    $day->groupedExercises = $day->programDay->programDayExercises->chunkwhile(function ($value, $key, $chunk) {
+                        return $value->exercise_id === optional($chunk->last())->exercise_id;
+                    });
+
+                    return $day;
+                });
+            });
 
         $days = $helper->getNeighbouringDays($userProgram, $week, $day);
 
@@ -73,6 +93,7 @@ class UserProgramController extends Controller
     }
 
     public function cancel(Request $request) {
+        
         $user = $request->user();
         $userProgramStatus = $user->userProgram()
             ->where('id', $request['cancel_program.id'])

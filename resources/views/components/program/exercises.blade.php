@@ -11,7 +11,7 @@
             <div class="days_per_week hidden mt-2">
                 @foreach ($days as $day)
                     <div class="day ml-2 text-xl font-bold flex flex-col">
-                        <div class="flex flex-row">
+                        <div class="flex flex-row mb-2">
                             Day {{ $day->day_number}}
                             @if ($day->name)
                                 <div>
@@ -26,18 +26,21 @@
                     </div>
                    
                     <div class="exercises ml-4 hidden text-lg mb-4">
-                        @forelse ($day->programDayExercises as $programExercise)
-                            <div>
-                                <p class="text-muted-foreground">
-                                    <b class="text-gray-500">{{ $programExercise->exercise->name }}</b>
-                                    {{ $programExercise->sets }} x {{ $programExercise->reps }}
-                                    @if($programExercise->percentage) {{ '@'. $programExercise->percentage }}<small> (percent) </small>@endif
-                                    @if($programExercise->rpe), RPE{{ $programExercise->rpe }} @endif
-                                    @if($programExercise->duration_minutes)| duration: {{ $programExercise->duration_minutes }} <small>(minutes) </small> @endif
-                                </p>
+                        @forelse ($day->groupedExercises as $index => $item)
+                            <div class="text-muted-foreground mb-1">
+                                <b class="text-gray-500">{{ $item->first()->exercise->name }}</b>
+                            @foreach ( $item as $exercise)
+                                        {{ $exercise->sets }} x {{ $exercise->reps }}
+                                        @if($exercise->rep_max && $exercise->percentage) {{ $exercise->percentage . '% of ' . $exercise->reps . 'RM'}}
+                                        @elseif($exercise->rep_max && !$exercise->percentage) RM 
+                                        @elseif($exercise->percentage && !$exercise->rep_max) {{ '@'. $exercise->percentage }}%@endif
+                                        @if($exercise->rpe), RPE{{ $exercise->rpe }} @endif
+                                        @if($exercise->duration_minutes)| duration: {{ $exercise->duration_minutes }} <small>(minutes) </small> @endif
+                                        @if(count($item) > 1 && $exercise !== $item->last()), @endif
+                            @endforeach
                             </div>
                         @empty
-                            <p class="text-muted-foreground">No exercises yet.</p>
+                            No exercises yet.</p>
                         @endforelse
                     </div>
                 @endforeach

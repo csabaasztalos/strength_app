@@ -7,10 +7,18 @@ if (openBtns) {
         const exerciseName = btn.dataset.name;
         const exerciseCategory= btn.dataset.category;
         const exerciseDescription = btn.dataset.description;
+        const percentageBase = btn.dataset.percentagebase;
+        const percentagebaseid = btn.dataset.percentagebaseid;
 
         document.querySelector('#exerciseName').value = exerciseName;
+
         if(exerciseDescription !== null) {
             document.querySelector('#exerciseDescription').value = exerciseDescription;
+        }
+
+        if(percentageBase !== undefined) {
+            document.querySelector('#percentageBase').value = percentagebaseid;
+            document.querySelector('#editExerciseSearch').value = percentageBase;
         }
 
         document.querySelector('#edit_category').value = exerciseCategory;

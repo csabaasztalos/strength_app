@@ -5,7 +5,9 @@
 <x-card>
     <div>
         <a href="{{ route('program.show', $program) }}" class="w-fit" data-test="showProgram">
-            <h3 class="text font-bold text-lg mb-2 flex gap-2">{{ $program->name }}<x-icons.arrow/></h3>
+            <h3 class="text font-bold text-lg mb-2 flex gap-2 line-clamp-1">
+                <p class="line-clamp-1 text-ellipsis max-w-35 xl:max-w-50">{{ $program->name }}</p><x-icons.arrow/>
+            </h3>
         </a>
     </div>
     
@@ -14,7 +16,7 @@
             @if ($program?->image_path)
                 <img src="{{ Storage::url($program->image_path) }}"
                 alt="program"
-                class="w-60 h-40 rounded-md mb-2 object-cover"
+                class="w-50 h-40 rounded-md mb-2 object-cover"
                 data-test="program-image">
             @endif
         </div>
@@ -35,6 +37,6 @@
     </div>
     <div>
         
-        <div class="text-muted-foreground">{{ $program->description ?? 'No description for this program.'}}</div>
+        <div class="text-muted-foreground text-ellipsis">{{ $program->description ?? 'No description for this program.'}}</div>
     </div>
 </x-card>

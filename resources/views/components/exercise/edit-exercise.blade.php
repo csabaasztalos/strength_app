@@ -26,19 +26,30 @@
                     <div class="space-y-2">
                         <label class="label mt-2" for="exerciseDescription">Description</label>
                         <textarea
-                        class="input min-h-40"
-                        id="exerciseDescription"
-                        name="edit_exercise[description]"
-                        placholder="Example description"
-                        data-test="editDescription"
-                        value="">
-
-                        </textarea>
+                            class="input min-h-40"
+                            id="exerciseDescription"
+                            name="edit_exercise[description]"
+                            placholder="Example description"
+                            data-test="editDescription"
+                            value=""></textarea>
                     </div>
-        
+
+                    <div class="relative w-full">
+                        <p class="label my-2">Percentage based on</p>
+                        <input
+                            id="editExerciseSearch"
+                            placholder="Percentage based on"
+                            value=""
+                            class="input exerciseSearch w-full"
+                        />
+
+                        <ul id="exerciseResults" class="absolute left-0 top-full z-50 w-full max-h-40 overflow-y-auto bg-white divide-y divide-gray-200">
+                        </ul>
+                    </div>
+
                     <div>
                         <div class="label mt-2">Category</div>
-                        <div class="grid grid-cols-4 mt-2 gap-1">
+                        <div class="grid grid-cols-3 mt-2 gap-1 md:grid-cols-4">
                             @foreach (App\ExerciseCategory::cases() as $category)
                             <button
                                 type="button"
@@ -52,6 +63,13 @@
                             required="required"
                             name="edit_exercise[category]"
                             id="edit_category"
+                            type="hidden"
+                            value=""
+                        />
+
+                        <x-form.field
+                            name="edit_exercise[percentage_based_on_exercise_id]"
+                            id="percentageBase"
                             type="hidden"
                             value=""
                         />

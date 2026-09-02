@@ -1,4 +1,4 @@
-<nav class="hidden md:block border-b border-border w-full mx-auto sticky top-0 bg-background">
+<nav class="hidden md:block border-b border-border w-full mx-auto sticky top-0 bg-background z-100 px-4">
     <div class="mx-auto max-w-7xl h-16 flex items-center justify-between">
         <div class="flex gap-x-5 items-center">
             <a href="/">

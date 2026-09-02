@@ -25,12 +25,9 @@
             </div>
             <div class="flex items-end gap-2">
                 @if ($program->status === App\ProgramStatus::ACTIVE)
-                    <form method="POST" action="{{ route('user_program.start', $program) }}">
-                        @csrf
-                        <button type="submit" class="btn btn-outlined bg-black text-white" data-test="startProgram">
-                            Start Program
-                        </button>
-                    </form>
+                    <button type="submit" class="btn btn-outlined bg-black text-white" id="openStartModal" data-test="startProgram">
+                        Start Program
+                    </button>
                 @endif
                 @if ($user->role === App\UserRoles::COACH)
                     @if($program->status == App\ProgramStatus::DRAFT)
@@ -44,7 +41,6 @@
                             <button type="submit" class="btn btn-outlined bg-green-500/40" data-test="publishProgram">
                                     Publish<x-icons.check/>
                             </button>
-                            <input type="hidden" value="{{ $program->id }}" name="publish_program_id">
                         </form>
 
                         <form method="POST" action="{{ route('program.delete', $program) }}">
@@ -91,5 +87,5 @@
    
         <x-program.exercises :programDays="$programDays"></x-program.exercises>
     </div>
-
+    <x-program.user.start-modal :program="$program" :exerciseMaxes="$exerciseMaxes"/>
 </x-layout>

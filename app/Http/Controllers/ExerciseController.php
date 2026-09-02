@@ -21,12 +21,17 @@ class ExerciseController extends Controller
         $exercises = Exercise::query()
             ->when($request->filled('category'), function($query) use($request) {
                 $query->where('category', $request->category);
-            })->get();
+            })
+            ->when($request->filled('name'), function($query) use ($request) {
+               $query->where('name', 'like', '%' . $request->name . '%') ;
+            })
+            ->paginate(9)
+            ->withQueryString();
 
         return view('exercise.index', [
             'exercises' => $exercises,
             'categories' => $categories
-            ]);
+        ]);
     }
 
 
@@ -91,7 +96,7 @@ class ExerciseController extends Controller
         $exercises = Exercise::query()
             ->where('name', 'like', '%' . $query . '%')
             ->orderBy('name')
-            ->limit(10)
+            ->limit(9)
             ->get(['id', 'name']);
 
         return response()->json($exercises);

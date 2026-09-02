@@ -1,9 +1,10 @@
 <?php
 
+use App\Models\Exercise;
 use App\Models\Program;
+use App\Models\ProgramDayExercise;
 use App\Models\User;
 use App\Models\UserProgram;
-use App\ProgramStatus;
 use App\UserProgramDayStatus;
 use App\UserProgramStatus;
 use App\UserRoles;
@@ -23,6 +24,7 @@ it('starts a program', function () {
     visit(route('program.show', $program))
         ->assertPathIs('/program/1')
         ->click('@startProgram')
+        ->click('Proceed')
         ->assertSee('Successfully started');
     
     $this->assertDatabaseHas('user_programs', [
@@ -31,6 +33,50 @@ it('starts a program', function () {
     ]);
 
     $this->assertDatabaseHas('user_program_days', ['id' => 1]);
+});
+
+
+it('starts a program, and fills user max', function () {
+    $user = User::factory()->create(([
+        'role' => UserRoles::COACH
+    ]));
+
+    $this->actingAs($user);
+
+    $program = Program::factory()->create([
+        'user_id' => $user->id
+    ]);
+
+    $exercise = Exercise::factory()->create();
+    $exercise->update([
+        'percentage_based_on_exercise_id' => $exercise->id
+    ]);
+
+    $programDayExercise = ProgramDayExercise::factory()->create([
+        'program_day_id' => 1,
+        'exercise_id' => $exercise->id,
+        'percentage' => 100
+    ]);
+
+
+    visit(route('program.show', $program))
+        ->assertPathIs('/program/1')
+        ->click('@startProgram')
+        ->fill('@userMax', '100')
+        ->click('Proceed')
+        ->assertSee('Successfully started')
+        ->click('My programs')
+        ->assertPathIs('/my-programs/1')
+        ->click('Progression')
+        ->assertSee('~100% (100 kg');
+    
+    $this->assertDatabaseHas('user_programs', [
+        'program_id' => $program->id,
+        'status' => UserProgramStatus::STARTED
+    ]);
+
+    $this->assertDatabaseHas('user_program_days', ['id' => 1]);
+    $this->assertDatabaseHas('user_program_exercise_maxes', ['id' => 1]);
 });
 
 
@@ -48,7 +94,7 @@ it('cancels a user program', function () {
 
     visit(route('user.programs', $user))
         ->assertPathIs('/my-programs/1')
-        ->click('Cancel program')
+        ->click('Cancel')
         ->click('Proceed')
         ->assertPathIs('/my-programs/1')
         ->assertSee('Program successfully cancelled!');
@@ -74,7 +120,7 @@ it('can complete days', function () {
 
      visit(route('user.programs', $user))
         ->assertPathIs('/my-programs/1')
-        ->click('My progression')
+        ->click('Progression')
         ->click('@completeWorkout')
         ->assertSee('Day marked as Completed!');
     
@@ -103,7 +149,7 @@ it('can skip days', function () {
 
      visit(route('user.programs', $user))
         ->assertPathIs('/my-programs/1')
-        ->click('My progression')
+        ->click('Progression')
         ->click('@skipWorkout')
         ->assertSee('Day marked as Skipped!');
     
@@ -138,7 +184,7 @@ it('can finish a user program', function () {
 
      visit(route('user.programs', $user))
         ->assertPathIs('/my-programs/1')
-        ->click('My progression')
+        ->click('Progression')
         ->click('@completeWorkout')
         ->assertSee('Day marked as completed!')
         ->click('@nextDay')
@@ -180,9 +226,11 @@ it('can\'t run 2 of the same program at once', function () {
     visit(route('program.show', $program))
         ->assertPathIs('/program/1')
         ->click('@startProgram')
+        ->click('Proceed')
         ->assertSee('Successfully started')
         ->click('@showProgram')
         ->click('@startProgram')
+        ->click('Proceed')
         ->assertSee('You can\'t run the same program twice at the same time!');
     
     $this->assertDatabaseCount('user_programs', 1);
@@ -209,6 +257,7 @@ it('can run 2 (different) programs at once', function () {
     visit(route('program.show', $program))
         ->assertPathIs('/program/2')
         ->click('@startProgram')
+        ->click('Proceed')
         ->assertSee('Successfully started');
     
     $this->assertDatabaseCount('user_programs', 2);
@@ -239,6 +288,7 @@ it('can\'t run more than 2 (different) programs at once', function () {
     visit(route('program.show', $program))
         ->assertPathIs('/program/3')
         ->click('@startProgram')
+        ->click('Proceed')
         ->assertSee('You only can run 2 programs at the same time!');
     
     $this->assertDatabaseCount('user_programs', 2);

@@ -23,4 +23,11 @@
         </x-form>
    </div>
 
+    @if ($errors->getBag('updateProgramError')->any())
+        <div id="message" class="bg-red-500 px-4 py-3 fixed bottom-4 right-4 rounded-lg text-white z-200">
+            {{ $errors->getBag('updateProgramError')->first() }}
+        </div>
+    @endif
+
+    <x-program.confirm-copy-modal :program="$program"/>
 </x-layout>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ApplyWeekData;
 use App\Actions\StoreProgram;
 use App\Http\Requests\UpdateStatusRequest;
 use App\Models\Program;
@@ -9,8 +10,6 @@ use App\Http\Requests\StoreProgramRequest;
 use App\Http\Requests\UpdateProgramRequest;
 use App\ProgramStatus;
 use App\UserProgramStatus;
-use App\UserRoles;
-use Auth;
 use Illuminate\Http\Request;
 use App\Actions\UpdateProgram;
 use Storage;
@@ -73,7 +72,6 @@ class ProgramController extends Controller
      */
     public function store(StoreProgramRequest $request, StoreProgram $action)
     {
-        
         $program = $action->handle($request);
 
         return redirect()
@@ -93,13 +91,37 @@ class ProgramController extends Controller
             $program->programDays()
             ->with('programDayExercises.exercise')
             ->get()
-            ->groupBy('week_number');
+            ->groupBy('week_number')
+            ->map(function ($days) {
+                return $days->map(function ($day) {
+
+                    $day->groupedExercises = $day->programDayExercises->chunkwhile(function ($value, $key, $chunk) {
+                        return $value->exercise_id === optional($chunk->last())->exercise_id;
+                    });
+
+                    return $day;
+                });
+            });
         
+        $startModalData = $programDays
+        ->flatMap(function ($daysInWeek) {
+            return $daysInWeek;
+        })->flatMap(function ($day) {
+            return $day->programDayExercises;
+        })
+        ->filter(function ($programDayExercises) {
+            return !is_null($programDayExercises->exercise->percentage_based_on_exercise_id);
+        })
+        ->unique(fn ($programDayExercise) =>
+            $programDayExercise->exercise->percentage_based_on_exercise_id
+        );
+
         return view('program.show', [
-                'program' => $program,
-                'programDays' => $programDays,
-                'user' => $user
-            ]);
+            'program' => $program,
+            'programDays' => $programDays,
+            'user' => $user,
+            'exerciseMaxes' => $startModalData
+        ]);
     }
 
 
@@ -111,6 +133,7 @@ class ProgramController extends Controller
         $programDays =
             $program->programDays()
             ->with('programDayExercises.exercise')
+            ->orderBy('position')
             ->get()
             ->groupBy('week_number');
 
@@ -165,6 +188,7 @@ class ProgramController extends Controller
         return redirect(route('programs'))->with('success', "Program has been successfully published.");
     }
 
+
     /**
      * Draft specified program.
      */
@@ -181,6 +205,7 @@ class ProgramController extends Controller
         return redirect(route('programs', $program))->with('success', "Program has been successfully drafted.");
     }
 
+
     public function hide(Program $program, Request $request)
     {
         if ($program->status === ProgramStatus::ACTIVE) {
@@ -190,5 +215,20 @@ class ProgramController extends Controller
         }
         
         return redirect()->back()->with('error', "You only can hide active programs!");
+    }
+
+
+    public function apply(Program $program, Request $request, ApplyWeekData $action)
+    {
+        $firstWeek = $request->input('weeks.1');
+        $days = $firstWeek['days'];
+
+        try {
+            $action->handle($days, $program);
+
+            return redirect()->back()->with('success', "You applied the 1. weeks data to all weeks!");
+        } catch (\Throwable $e) {
+             return redirect()->back()->with('error', "Something went wrong, during the copy!");
+        }
     }
 }

@@ -11,3 +11,8 @@ import './toggleCancelModal.js';
 import './searchExercises.js';
 import './fillEditModalData.js';
 import './fillCancelModalData.js';
+import './updateExercisePositions.js';
+import './startProgramModal.js';
+import './confirmWeeksModal.js';
+import './getFirstWeeksData.js';
+import './fillStartModalData.js';

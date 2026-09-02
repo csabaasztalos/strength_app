@@ -2,7 +2,7 @@
 <dialog class="backdrop:bg-black/50 backdrop:backdrop-blur-xs m-auto" style="background: transparent !important; border: 0 !important; padding: 0 !important;"  id="newExerciseModal">
     <div class="rounded-xl overflow-hidden max-w-2xl max-h-[80dvh] mx-auto shadow-2xl">
         <x-card class="w-full h-full overflow-hidden relative">
-            <div class="flex items absolute top-5 right-5"><a class="btn btn-outlined text-gray-500" id="modalClose">X</a></div>
+            <div class="flex items absolute top-5 right-5"><a class="btn btn-outlined text-gray-500 modalClose">X</a></div>
             <x-form
                 action="{{ route('exercise.store') }}"
                 size="max-w-2xl"
@@ -48,7 +48,7 @@
                             dataTest="programCategory"
                         />
                     </div>
-
+                    
                     <div>
                         <button type="submit" class="btn btn-primray mt-2 mb-2" data-test="createExercise">Save</button>
                     </div>

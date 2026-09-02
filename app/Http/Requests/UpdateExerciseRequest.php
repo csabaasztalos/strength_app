@@ -28,7 +28,10 @@ class UpdateExerciseRequest extends FormRequest
             'edit_exercise' => ['required', 'array'],
             'edit_exercise.name' => ['required', 'string', 'min:3', 'max:255', Rule::unique('exercises', 'name')->ignore($this->input('edit_exercise.id'))],
             'edit_exercise.description' => ['nullable', 'string'],
-            'edit_exercise.category' => ['required', 'string', Rule::enum(ExerciseCategory::class)]
+            'edit_exercise.category' => ['required', 'string', Rule::enum(ExerciseCategory::class)],
+            'edit_exercise.percentage_based_on_exercise_id' => ['nullable', 'integer', Rule::exists('exercises', 'id')]
         ];
     }
+
+    protected $errorBag = 'editExerciseModal';
 }

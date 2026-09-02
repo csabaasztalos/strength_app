@@ -2,18 +2,19 @@
     'label' => null, 'name' => null, 'value' => null,
     'type' => 'text', 'required' => null, 'min' => null,
     'max' => null, 'class' => null, 'id' => null, 'accept' => null,
-    'placeholder' => null, 'dataTest'=>null, 'step' => null
+    'placeholder' => null, 'dataTest'=>null, 'step' => null,
+    'displayErrors' => true
 ])
 
 <div class="space-y-2">
     @if ($label)
-        <label class="label mt-2" for="{{ $name ?? '' }}">{{ $label }}</label>
+        <label class="label mt-2" for="{{ $name }}">{{ $label }}</label>
     @endif
     <input
         @if ($placeholder)  placeholder="{{ $placeholder}}"@endif
         @if ($step)  step="{{ $step }}"@endif
-        @if ($class) class={{ "$class" }}
-        @else class={{ "input" }}
+        @if ($class) class="{{ "$class" }}"
+        @else class="{{ "input" }}"
         @endif
         id="{{ $id ?? $name}}"
         type="{{ $type }}"
@@ -28,7 +29,9 @@
         @if ($dataTest) data-test={{ "{$dataTest}" }} @endif
         >
 
-    @error($name)
-        <p class='error'>{{ $message }}</p>
-    @enderror
+    @if($displayErrors === true)
+        @error($name)
+            <p class='error'>{{ $message }}</p>
+        @enderror
+    @endif
 </div>

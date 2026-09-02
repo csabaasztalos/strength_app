@@ -3,7 +3,7 @@
     'week_number', 'day_number',
     'next_day' => null, 'next_week' => null,
     'previous_day' => null, 'previous_week' => null
-    ])
+])
 
 <x-card class="relative">
     <div class="w-full flex gap-2 mx-auto items-center justify-center">
@@ -56,21 +56,48 @@
                         </div>
                     </div>
 
+                    @forelse ($day->groupedExercises as $item)
+                        <div class="mb-3">
+                            <p class="font-semibold text-gray-500 text-lg">
+                                {{ $item->first()->exercise->name }}
+                            </p>
 
-                    <div class="ml-2">
-                        @forelse ($day->programDay->programDayExercises as $programExercise)
-                            <div>
-                                <p class="text-muted-foreground text-lg">
-                                    <b class="text-gray-500">{{ $programExercise->exercise->name }}</b>
-                                    {{ $programExercise->sets }} x {{ $programExercise->reps }}
-                                    @if($programExercise->percentage) {{ '@'. $programExercise->percentage }}<small> (percent) </small>@endif
-                                    @if($programExercise->rpe), RPE{{ $programExercise->rpe }} @endif
-                                    @if($programExercise->duration_minutes)| duration: {{ $programExercise->duration_minutes }} <small>(minutes) </small> @endif
-                                </p>
-                            </div>
-                        @empty
-                            <p class="text-muted-foreground">No exercises yet.</p>
-                        @endforelse
+                            <ul class="list-disc ml-5 space-y-1 text-muted-foreground">
+                                @foreach ($item as $exercise)
+                                    @php
+                                        $userMax = $program->userProgramExerciseMaxes
+                                            ->firstWhere('exercise_id', $exercise->exercise->percentage_based_on_exercise_id);
+                                    @endphp
+
+                                    <li>
+                                        {{ $exercise->sets }}×{{ $exercise->reps }}
+
+                                        @if($exercise->rep_max && $exercise->percentage && !$userMax)
+                                            {{ $exercise->percentage }}% of {{ $exercise->reps }}RM
+                                        @elseif($exercise->rep_max)
+                                            RM
+                                        @elseif($exercise->percentage && $userMax)
+                                            ~{{ $exercise->percentage }}%
+                                            ({{ (int) ($userMax->max * ($exercise->percentage / 100)) }} kg)
+                                        @elseif($exercise->percentage)
+                                            ~{{ $exercise->percentage }}%
+                                        @endif
+
+                                        @if($exercise->rpe)
+                                            , RPE {{ $exercise->rpe }}
+                                        @endif
+
+                                        @if($exercise->duration_minutes)
+                                            | {{ $exercise->duration_minutes }} min
+                                        @endif
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @empty
+                        <p class="text-muted-foreground">No exercises yet.</p>
+                    @endforelse
+
                         <label class="label mt-2 font-bold" for="notes">Notes(optional):</label>
                         <form action="{{ route('user_program.update', [$program, $day_number, $week_number]) }}" method="POST">
                             @csrf

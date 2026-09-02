@@ -1,9 +1,10 @@
 
 const modal = document.querySelector('#newExerciseModal');
+const editModal = document.querySelector('#editExerciseModal');
 
 if (modal) {
     const openBtn = document.querySelector('#openModal');
-    const closeBtn = document.querySelector('#modalClose');
+    const closeBtn = document.querySelector('.modalClose');
 
     openBtn.addEventListener('click', function(event) {
         modal.showModal();
@@ -12,9 +13,11 @@ if (modal) {
     closeBtn.addEventListener('click', function(event) {
         modal.close();
     });
+}
 
 
-    const editModal = document.querySelector('#editExerciseModal');
+
+if (editModal) {
     const openEditModalBtns = document.querySelectorAll('.openEditModal');
     const closeEditModalBtn = document.querySelector('#closeEditModal');
 
@@ -25,7 +28,6 @@ if (modal) {
     });
 
     closeEditModalBtn.addEventListener('click', function(event) {
-            editModal.close();
+        editModal.close();
     });
 }
-
