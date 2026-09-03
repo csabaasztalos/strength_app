@@ -25,17 +25,10 @@ Egy Laravel és SQLite alapú coaching webalkalmazás.
 - JavaScript
 
 ## Képernyőképek
-<img width="1842" height="1251" alt="Screenshot 2026-09-03 165440" src="https://github.com/user-attachments/assets/f8089985-8dad-4f9f-bffd-7777b3df3ae1" />
-<img width="2049" height="1277" alt="Screenshot 2026-09-03 165458" src="https://github.com/user-attachments/assets/4bb2bab7-a0eb-42b0-8f49-5f422aeca93b" />
-<img width="1761" height="1279" alt="Screenshot 2026-09-03 165512" src="https://github.com/user-attachments/assets/5a8a4cdc-aa84-4f78-a518-dee02d0c4beb" />
-<img width="1937" height="1283" alt="Screenshot 2026-09-03 165530" src="https://github.com/user-attachments/assets/b42f26bc-c555-47d1-b966-5e9d9dda6ba1" />
-<img width="1679" height="1284" alt="Screenshot 2026-09-03 165541" src="https://github.com/user-attachments/assets/bfeb9d56-8798-4e9f-bcf7-bd441a59189e" />
-<img width="1644" height="1290" alt="Screenshot 2026-09-03 165729" src="https://github.com/user-attachments/assets/d813422b-9ffd-41c7-a8a7-ad907b79a7b9" />
-<img width="1568" height="1279" alt="Screenshot 2026-09-03 165736" src="https://github.com/user-attachments/assets/5796eb82-d204-4fc9-88d5-2a80d555125d" />
-<img width="1651" height="1290" alt="Screenshot 2026-09-03 165807" src="https://github.com/user-attachments/assets/c296e230-92a3-485a-bd22-933967f2a423" />
-
-
-
-
-
+<img width="1917" height="932" alt="Screenshot 2026-09-03 170112" src="https://github.com/user-attachments/assets/2cd19978-c421-4d5b-acff-4a49968a7ee0" />
+<img width="1916" height="929" alt="Screenshot 2026-09-03 170134" src="https://github.com/user-attachments/assets/65ddb50b-5c9a-4b04-a5e8-ee5e1f886bc1" />
+<img width="1903" height="932" alt="Screenshot 2026-09-03 170206" src="https://github.com/user-attachments/assets/444f370f-d2d7-46e9-9bc8-db55cda9aeb8" />
+<img width="1896" height="934" alt="Screenshot 2026-09-03 170234" src="https://github.com/user-attachments/assets/cfed7cc6-db48-47d9-864b-d8ac9b9cba51" />
+<img width="1919" height="937" alt="Screenshot 2026-09-03 170249" src="https://github.com/user-attachments/assets/01f343ab-2497-4005-b8d5-cd42db4e4927" />
+<img width="1908" height="935" alt="Screenshot 2026-09-03 170206" src="https://github.com/user-attachments/assets/fcc7fe33-5f91-46a7-89ce-ee00a49a5ef8" />
 
